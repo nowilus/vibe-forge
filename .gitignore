@@ -26,3 +26,6 @@ Thumbs.db
 
 # vibe-forge internal artefacts created during interview
 .vibe-forge/used/
+
+# Framework maintainer — local LLM session map (see repo README “Repository layout” to recreate)
+FRAMEWORK_MAP.local.md
