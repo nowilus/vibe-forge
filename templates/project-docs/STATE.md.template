@@ -65,6 +65,7 @@ A pointer-only map. Do NOT duplicate content here — point to the canonical fil
 | Design system               | `DESIGN.md`                   |
 | Database schema             | `DATABASE.md`                 |
 | Hosting & secrets           | `DEPLOYMENT.md`               |
+| Lessons & mistakes          | `LESSONS.md`                  |
 | Full history                | `CHANGELOG.md`                |
 | Released versions           | `RELEASE_NOTES.md`            |
 

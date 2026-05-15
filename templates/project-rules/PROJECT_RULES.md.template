@@ -11,9 +11,10 @@
 
 1. `PROJECT_MAP.md` — to know where things are.
 2. `STATE.md` — to know what currently exists.
-3. **This file** — to know the rules.
-4. `PRODUCT.md` — to know what the product is supposed to do.
-5. The relevant subsidiary rule file:
+3. `LESSONS.md` — skim categories relevant to the current task; carry active rules as constraints.
+4. **This file** — to know the rules.
+5. `PRODUCT.md` — to know what the product is supposed to do.
+6. The relevant subsidiary rule file:
    - `CODING_RULES.md` for code edits.
    - `DESIGN.md` for UI changes.
    - `DATABASE.md` for schema / migration changes.
@@ -64,8 +65,32 @@ Every change MUST update the relevant documentation files in the same edit batch
 | `DATABASE.md`       | At every schema change                                    | Add migration entry.                 |
 | `DESIGN.md`         | When design tokens / components change                    | Update affected section.             |
 | `DEPLOYMENT.md`     | When envs / secrets / hosting changes                     | Update affected section.             |
+| `LESSONS.md`        | After every user correction or discovered mistake         | Append a new entry; never delete (mark superseded/graduated instead). |
 
 If you make a change without updating the relevant doc, **you are not done**.
+
+### 3.1 Self-improvement loop (LESSONS.md protocol)
+
+`LESSONS.md` is a living record of mistakes, corrections, and the preventive rules derived from them. It powers a self-improvement loop that makes the agent better over time.
+
+**After ANY correction from the user:**
+
+1. Acknowledge the correction.
+2. Fix the issue.
+3. **Before continuing work**, append a new entry to `LESSONS.md` using the entry schema defined in that file:
+   - What went wrong — the *pattern*, not just the instance.
+   - Why — the *root cause*, not just the symptom.
+   - The imperative rule that prevents recurrence.
+4. Add the rule to the "Quick-reference: active rules" summary at the top of `LESSONS.md`.
+5. If the same category now has 3+ active lessons, propose to the user that one should **graduate** into the relevant permanent rule file (`CODING_RULES.md`, `DESIGN.md`, `DATABASE.md`, etc.).
+
+**At session start:**
+
+1. Read `PROJECT_MAP.md` and `STATE.md` (as before).
+2. Skim `LESSONS.md` — focus on categories relevant to the current task.
+3. Carry the active rules as binding constraints for the session.
+
+**Do not skip this step.** Generic rules are not enough — these lessons are project-specific and hard-won.
 
 ## 4. Coding rules (high-level — full text in `CODING_RULES.md`)
 

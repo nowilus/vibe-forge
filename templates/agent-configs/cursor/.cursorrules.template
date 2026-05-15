@@ -9,9 +9,10 @@ You are working on <<PROJECT_NAME>>, a <<PROJECT_ONE_LINER>>.
 
 1. PROJECT_MAP.md — to know where things are.
 2. STATE.md — to know what currently exists.
-3. PROJECT_RULES.md — to know the rules.
-4. PRODUCT.md — to know what the product is supposed to do.
-5. The relevant subsidiary rule file:
+3. LESSONS.md — skim categories relevant to the current task; carry active rules as constraints.
+4. PROJECT_RULES.md — to know the rules.
+5. PRODUCT.md — to know what the product is supposed to do.
+6. The relevant subsidiary rule file:
    - CODING_RULES.md before any code edit.
    - DESIGN.md before any UI change.
    - DATABASE.md before any schema change.
@@ -45,6 +46,7 @@ Do not introduce a new framework, library or service without explicit user appro
 - Never edit CHANGELOG.md retroactively. Always append.
 - Schema changes go through a migration file. Never edit the live DB.
 - Every meaningful change updates STATE.md, CHANGELOG.md, and (if visible to client) CLIENT_DOCS.md in the same diff.
+- After ANY correction from the user: acknowledge, fix, then append a lesson to LESSONS.md (pattern + root cause + preventive rule) BEFORE continuing work. See PROJECT_RULES.md §3.1.
 
 ## The /atomic-prompts skill
 

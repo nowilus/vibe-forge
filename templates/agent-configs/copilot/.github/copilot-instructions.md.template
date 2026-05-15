@@ -6,9 +6,10 @@
 
 1. `PROJECT_MAP.md`
 2. `STATE.md`
-3. `PROJECT_RULES.md`
-4. `PRODUCT.md`
-5. Topic-specific: `CODING_RULES.md` / `DESIGN.md` / `DATABASE.md` / `DEPLOYMENT.md`.
+3. `LESSONS.md` — skim relevant categories; carry active rules as constraints.
+4. `PROJECT_RULES.md`
+5. `PRODUCT.md`
+6. Topic-specific: `CODING_RULES.md` / `DESIGN.md` / `DATABASE.md` / `DEPLOYMENT.md`.
 
 ## Stack
 
@@ -34,6 +35,7 @@ No new dependencies without explicit approval.
 - Schema changes via migration file only.
 - Same-diff updates to `STATE.md`, `CHANGELOG.md` (append), `CLIENT_DOCS.md` (when client-visible).
 - Never commit secrets.
+- After ANY correction from the user: acknowledge, fix, then append a lesson to `LESSONS.md` (pattern + root cause + preventive rule) BEFORE continuing.
 
 ## Must-not-do
 

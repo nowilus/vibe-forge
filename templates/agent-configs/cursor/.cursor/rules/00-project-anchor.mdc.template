@@ -10,8 +10,9 @@ When starting any task, read in this order:
 
 1. `PROJECT_MAP.md`
 2. `STATE.md`
-3. `PROJECT_RULES.md`
-4. Subsidiary file by topic:
+3. `LESSONS.md` — skim relevant categories; carry active rules as constraints
+4. `PROJECT_RULES.md`
+5. Subsidiary file by topic:
    - Code edit → `CODING_RULES.md`
    - UI change → `DESIGN.md`
    - DB change → `DATABASE.md`
@@ -19,5 +20,7 @@ When starting any task, read in this order:
    - Feature scope → `PRODUCT.md`
 
 If the answer is not in these files, ASK the user — do not full-scan the repo.
+
+After ANY correction from the user: acknowledge, fix, then append a lesson to `LESSONS.md` (pattern + root cause + preventive rule) BEFORE continuing. See `PROJECT_RULES.md` §3.1.
 
 For `/atomic-prompts` invocations, do not implement inline; generate `atomic-prompts/NNNN-<slug>.md` instead. Schema lives in `.cursor/commands/atomic-prompts.md`.

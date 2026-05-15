@@ -75,7 +75,7 @@ Free-text ("minimal, modern, dark with bright accents" / "fun and colourful" / �
 After Q10:
 
 1. Summarise answers in a compact table (mark 🤖 rows).
-2. List files that will be created (same superset as standard, just with more defaults auto-applied).
+2. List files that will be created (same superset as standard — including `LESSONS.md` — just with more defaults auto-applied).
 3. Ask: **"Ready to generate? Reply 'yes, generate'."**
 4. On confirmation, materialise templates exactly like `INIT_PROMPT_standard.md` Section 11 instructs. Print the post-interview cleanup checklist.
 

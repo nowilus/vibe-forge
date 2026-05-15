@@ -28,7 +28,8 @@
 **`vibe-forge` is:**
 
 - A **template GitHub repository** you clone once per project.
-- A set of **document templates** (`STATE.md`, `CHANGELOG.md`, `CLIENT_DOCS.md`, `PROJECT_MAP.md`, `RELEASE_NOTES.md`, plus a master `PROJECT_RULES.md`) that survive any stack change.
+- A set of **document templates** (`STATE.md`, `CHANGELOG.md`, `CLIENT_DOCS.md`, `PROJECT_MAP.md`, `RELEASE_NOTES.md`, `LESSONS.md`, plus a master `PROJECT_RULES.md`) that survive any stack change.
+- A **self-improvement loop** (`LESSONS.md`) that records every mistake and correction as a preventive rule, reviewed at the start of every agent session — so the same mistake never happens twice.
 - A set of **agent-specific rule files** (`.cursorrules`, `CLAUDE.md`, `AGENTS.md`, `.windsurfrules`, `copilot-instructions.md`, Lovable Project Knowledge) generated from a single source of truth.
 - A **deeply structured initial prompt** (`INIT_PROMPT_*.md`) that runs a guided interview with you in your own language and produces a tailored project skeleton at the end.
 - A **bundled `/atomic-prompts` skill** that turns a one-line idea into a high-quality, fully-contextualised prompt file you can run in any tool.
@@ -69,7 +70,7 @@ This is the intended user journey end-to-end:
    - your own free-form answer,
    - **option E ("let the model decide")** for that single question, or
    - **`/skip-section`** to let the model fill the whole remaining section with its best guesses (the prompt asks for a two-step confirmation before doing this, so you cannot trigger it by accident).
-6. When the interview ends, the LLM **fills every template** in `templates/` with your answers and moves them to the project root, deletes leftover scaffolding, and writes the first entries of `CHANGELOG.md`, `STATE.md`, `CLIENT_DOCS.md`, `PROJECT_MAP.md`, `RELEASE_NOTES.md`. If you asked for it, it also writes a guided "how this project works" walkthrough you can hand to a non-technical teammate.
+6. When the interview ends, the LLM **fills every template** in `templates/` with your answers and moves them to the project root, deletes leftover scaffolding, and writes the first entries of `CHANGELOG.md`, `STATE.md`, `CLIENT_DOCS.md`, `PROJECT_MAP.md`, `RELEASE_NOTES.md`, `LESSONS.md`. If you asked for it, it also writes a guided "how this project works" walkthrough you can hand to a non-technical teammate.
 7. You **start prompting normally** in your tool. The generated `.cursorrules` / `CLAUDE.md` / `AGENTS.md` / … all point every future agent session to `PROJECT_MAP.md` first, so context reload becomes one file, not the whole repo.
 8. Whenever you want a new feature or change, you can invoke the **`/atomic-prompts`** skill (see below). It turns a loose idea into a fully-contextualised prompt file in `atomic-prompts/`, which you can then execute in the same or a different tool.
 9. You sleep well. Documentation is in sync, history is linear, the client has something to read, the AI has something to anchor to.
@@ -160,7 +161,8 @@ vibe-forge/
 │   │   ├── CHANGELOG.md.template
 │   │   ├── CLIENT_DOCS.md.template
 │   │   ├── PROJECT_MAP.md.template
-│   │   └── RELEASE_NOTES.md.template
+│   │   ├── RELEASE_NOTES.md.template
+│   │   └── LESSONS.md.template
 │   ├── project-rules/               ← per-project rule templates
 │   │   ├── PROJECT_RULES.md.template       ← MASTER source of truth
 │   │   ├── CODING_RULES.md.template
@@ -194,7 +196,7 @@ After the interview ends:
 - `INIT_PROMPT_*.md` files are **deleted** (you can recover them from this repo any time).
 - `.vibe-forge-root` is **deleted**.
 - `docs/` is **kept** if you want the framework documentation around; **deleted** otherwise — your choice during the interview.
-- All five `templates/project-docs/*.template` files become real files at the project root.
+- All six `templates/project-docs/*.template` files become real files at the project root.
 
 ---
 
@@ -217,7 +219,7 @@ If your tool is not on this list, the master `PROJECT_RULES.md` is still 95% of 
 
 ## Documentation philosophy
 
-`vibe-forge` enforces **five separate documentation files** at the project root, each with one job and one job only:
+`vibe-forge` enforces **six separate documentation files** at the project root, each with one job and one job only:
 
 | File              | Audience          | Update policy                                    |
 | ----------------- | ----------------- | ------------------------------------------------ |
@@ -226,6 +228,7 @@ If your tool is not on this list, the master `PROJECT_RULES.md` is still 95% of 
 | `CLIENT_DOCS.md`  | End client        | Plain-language, non-technical. Updated when product behaviour changes. Safe to hand over at any moment. |
 | `PROJECT_MAP.md`  | LLM (primary)     | Compact, mechanical map of files / modules / sources of truth. The first file every agent rule points to. |
 | `RELEASE_NOTES.md`| Mixed / public    | Per-version user-facing notes. Generated from `CHANGELOG.md` at release time. |
+| `LESSONS.md`      | LLM + dev         | **Append after every correction.** Each entry captures the pattern, root cause, and a preventive rule. Reviewed at session start. Entries graduate into permanent rule files when proven. |
 
 Plus the rule files:
 
@@ -246,7 +249,7 @@ See [`docs/HOW_IT_WORKS.md`](docs/HOW_IT_WORKS.md) for the long-form explanation
 
 The final message of every `INIT_PROMPT_*.md` ends with this checklist. Reproduced here so you can sanity-check the result:
 
-- [ ] `STATE.md`, `CHANGELOG.md`, `CLIENT_DOCS.md`, `PROJECT_MAP.md`, `RELEASE_NOTES.md` exist at the project root with content.
+- [ ] `STATE.md`, `CHANGELOG.md`, `CLIENT_DOCS.md`, `PROJECT_MAP.md`, `RELEASE_NOTES.md`, `LESSONS.md` exist at the project root with content.
 - [ ] `PROJECT_RULES.md` exists and contains your chosen stack, language policy, and security baseline.
 - [ ] At least one agent rule file matches each tool you said you use (`.cursorrules`, `CLAUDE.md`, `AGENTS.md`, etc.).
 - [ ] `.env.example` reflects the stack you chose (Supabase / Firebase / Postgres / Vercel / custom).
@@ -289,7 +292,7 @@ A. Yes. `PROJECT_RULES.md` is the single source of truth; you (or your AI) can d
 
 - Initial public skeleton:
   - Three `INIT_PROMPT_*.md` variants (short / standard / deep).
-  - Five project-doc templates and six project-rule templates.
+  - Six project-doc templates (including `LESSONS.md` self-improvement loop) and six project-rule templates.
   - Agent-config templates for Cursor, Claude Code, Codex, Windsurf, Copilot, Lovable.
   - `/atomic-prompts` skill in Cursor, Claude Code, and Codex flavours.
   - Sentinel-file path check, hybrid interview interaction (askUserQuestion + numbered fallback, option E + `/skip-section`).

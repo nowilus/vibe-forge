@@ -148,13 +148,13 @@ Same as `INIT_PROMPT_standard.md` Section 11, with **extra rigour**:
 2. Highlight any contradictions detected (e.g. `Q5.3 = DB-level` but `Q3.3 = SQLite` — flag because SQLite has no RLS).
 3. Ask: **"Ready to generate? Reply 'yes, generate'. Or 'change Q2.6 to subscription'. Or 'explain Q6.10 again'."**
 4. On `yes, generate`:
-   - Materialise every template (same superset as standard).
+   - Materialise every template (same superset as standard, including `LESSONS.md`).
    - Additionally write **section stubs** for any extra topic raised here (testing, performance budgets, on-call) into the relevant rules files (`CODING_RULES.md`, `DEPLOYMENT.md`, `PROJECT_RULES.md`).
    - Add a `### Security` block to `PROJECT_RULES.md` summarising MFA / session / rate-limit / audit-log answers.
    - Add testing config stubs to the project root only if Q10.3 ≠ none (e.g. `playwright.config.ts.template`-style stub written from your knowledge — not from a template file in this framework, because we deliberately do not ship code).
    - Run cleanup per Q12.1.
    - Run git init per Q12.2 + initial commit using Q12.3 style.
-5. Print the same post-interview cleanup checklist as the standard prompt, **plus** a "deep-mode extras" sub-checklist with items for tests / perf / on-call configured during the interview.
+5. Print the same post-interview cleanup checklist as the standard prompt (which includes `LESSONS.md`), **plus** a "deep-mode extras" sub-checklist with items for tests / perf / on-call configured during the interview.
 
 ## 4. Failure modes
 

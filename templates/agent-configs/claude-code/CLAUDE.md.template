@@ -8,9 +8,10 @@ You are working on **<<PROJECT_NAME>>** — <<PROJECT_ONE_LINER>>.
 
 1. `PROJECT_MAP.md` — file / module map.
 2. `STATE.md` — current truth (features, environments).
-3. `PROJECT_RULES.md` — binding rules for every agent.
-4. `PRODUCT.md` — what the product is supposed to do.
-5. Topic-specific:
+3. `LESSONS.md` — skim categories relevant to current task; carry active rules as constraints.
+4. `PROJECT_RULES.md` — binding rules for every agent.
+5. `PRODUCT.md` — what the product is supposed to do.
+6. Topic-specific:
    - `CODING_RULES.md` for any code edit.
    - `DESIGN.md` for any UI work.
    - `DATABASE.md` for any schema work.
@@ -47,6 +48,7 @@ Every meaningful change updates documentation in the **same edit batch** as the 
 - `CLIENT_DOCS.md` — when behaviour visible to the client changes.
 - `PROJECT_MAP.md` — when structure changes.
 - `RELEASE_NOTES.md` — at release time.
+- `LESSONS.md` — after ANY user correction: acknowledge, fix, then append a lesson (pattern + root cause + preventive rule) BEFORE continuing. See `PROJECT_RULES.md` §3.1.
 
 ## The `/atomic-prompts` skill
 

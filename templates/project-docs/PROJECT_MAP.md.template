@@ -22,6 +22,7 @@ This is the **first file every agent should read** when starting a session. It i
 | Database schema                | `DATABASE.md`                 | Before any DB change.      |
 | Deployment & secrets           | `DEPLOYMENT.md`               | Before any infra change.   |
 | Client-facing description      | `CLIENT_DOCS.md`              | When client asks.          |
+| Lessons & mistakes             | `LESSONS.md`                  | Every session (skim relevant categories). |
 | Linear history                 | `CHANGELOG.md`                | When digging into history. |
 | Released versions              | `RELEASE_NOTES.md`            | At release time.           |
 

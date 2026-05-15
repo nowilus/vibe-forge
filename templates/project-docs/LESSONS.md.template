@@ -1,0 +1,130 @@
+# LESSONS.md — self-improvement loop for <<PROJECT_NAME>>
+
+> **Audience:** every AI agent working on this repository + every human contributor.
+> **Update policy:** APPEND after every user correction or discovered mistake. NEVER delete entries — mark them `superseded` or `graduated` instead. Review relevant categories at the start of every session.
+> **Generated from:** `templates/project-docs/LESSONS.md.template` (vibe-forge).
+> **Last updated:** <<GENERATED_AT>>
+
+---
+
+## What this file is
+
+This file is a **living record of mistakes, corrections, and the rules derived from them**. Every time the user corrects the AI agent (or a human contributor discovers a pattern that caused a bug), a new entry is appended here.
+
+The goal is a **self-improvement loop**:
+
+1. A mistake happens (or the user corrects the agent).
+2. The mistake is recorded here with its root cause and a preventive rule.
+3. At the start of every future session, the agent skims this file for rules relevant to the current task.
+4. The mistake rate drops over time because the agent carries these constraints.
+5. When a lesson proves itself consistently, it "graduates" into the permanent rule file (`CODING_RULES.md`, `DESIGN.md`, `DATABASE.md`, etc.) — the highest honour a lesson can earn.
+
+**This is not a blame log.** It is a knowledge base. Every entry makes the project stronger.
+
+---
+
+## How to use this file
+
+### For the AI agent (read this at session start)
+
+1. **Before any task**, skim the entries below. Focus on categories relevant to your current task (e.g. if you are editing UI, read `design` and `coding` lessons).
+2. **Carry active rules as constraints.** If a lesson says "never use inline styles for status colours", treat it as binding as any rule in `CODING_RULES.md`.
+3. **After ANY correction from the user:**
+   - Acknowledge the correction.
+   - Fix the issue.
+   - **Before continuing work**, append a new lesson entry using the schema below.
+   - If the same category now has 3+ active lessons, consider proposing a graduation (see §Graduation policy).
+4. **Do not skip this file.** It exists because generic rules were not enough — these lessons are project-specific and hard-won.
+
+### For the human contributor
+
+- If you spot a recurring mistake (yours or the AI's), add an entry.
+- If an entry no longer applies (e.g. the library it references was removed), mark it `superseded` — do not delete it.
+- If you want a lesson to become a permanent rule, mark it `graduated to <file>` and add the rule to the target file.
+
+---
+
+## Entry schema
+
+Every lesson uses this structure. The ID is sequential (`L-0001`, `L-0002`, …).
+
+```markdown
+### L-NNNN — <short imperative title> (<category>)
+
+- **Date:** YYYY-MM-DD
+- **Trigger:** <what the user corrected / what went wrong — describe the pattern, not just the instance>
+- **Root cause:** <why the mistake happened — missing context? wrong assumption? ignored rule? edge case?>
+- **Rule:** <imperative rule to prevent recurrence — "Always …", "Never …", "Before doing X, check Y">
+- **Applies to:** <files, patterns, or situations where this rule matters>
+- **Status:** active
+```
+
+### Status values
+
+| Status                          | Meaning                                                                                  |
+| ------------------------------- | ---------------------------------------------------------------------------------------- |
+| `active`                        | This rule is in effect. The agent must respect it.                                       |
+| `superseded by L-XXXX`          | A newer lesson refines or replaces this one. Read the newer one instead.                 |
+| `graduated to <FILE>.md`        | This rule proved so fundamental it was promoted to a permanent rule file. Still readable. |
+
+### Categories
+
+Use exactly one of these tags per entry:
+
+| Category        | When to use                                                     |
+| --------------- | --------------------------------------------------------------- |
+| `coding`        | Code style, error handling, naming, imports, dead code.         |
+| `design`        | UI, colours, typography, spacing, icons, motion, accessibility. |
+| `database`      | Schema, migrations, queries, RLS, enums, types.                 |
+| `deployment`    | Hosting, env vars, secrets, CI/CD, domains.                     |
+| `security`      | Auth, PII, tokens, CORS, CSP, rate limiting.                    |
+| `prompting`     | How to interpret user prompts, scope control, context loading.  |
+| `architecture`  | Folder structure, module boundaries, dependency management.     |
+| `performance`   | Bundle size, query speed, rendering, caching.                   |
+| `documentation` | Doc updates missed, wrong file updated, stale pointers.         |
+| `other`         | Anything that does not fit above.                                |
+
+---
+
+## Graduation policy
+
+A lesson is a candidate for **graduation** when:
+
+1. It has been `active` for 3+ sessions without being violated.
+2. It describes a rule general enough to apply beyond the specific incident that created it.
+3. The target rule file (`CODING_RULES.md`, `DESIGN.md`, etc.) does not already contain an equivalent rule.
+
+To graduate a lesson:
+
+1. Add the rule to the target file (e.g. add a bullet to `CODING_RULES.md` §3).
+2. Update the lesson entry here: change status to `graduated to CODING_RULES.md §3`.
+3. Add a `CHANGELOG.md` entry: "Graduated lesson L-XXXX into CODING_RULES.md".
+
+Graduated lessons stay in this file for historical context. They are no longer actively enforced from here — the permanent rule file takes over.
+
+---
+
+## Quick-reference: active rules
+
+> This section is a **compact summary** of all currently active lesson rules, maintained for fast scanning at session start. When you add a new lesson below, also add its rule here as a one-liner. When a lesson is superseded or graduated, remove its line from this summary.
+
+- *(no active lessons yet — this project just started)*
+
+---
+
+## Lessons
+
+*(Entries are appended below in chronological order. Newest at the bottom.)*
+
+<!-- 
+Example entry (delete this comment block after the first real lesson is added):
+
+### L-0001 — Always check for null before accessing nested properties (coding)
+
+- **Date:** 2026-05-15
+- **Trigger:** User corrected the agent for accessing `user.profile.avatar` without checking if `profile` exists, causing a runtime crash on new users who haven't set up their profile yet.
+- **Root cause:** The agent assumed all users have a profile object because the seed data did. Production data includes users who signed up but never completed onboarding.
+- **Rule:** Before accessing any nested property deeper than one level, add a null/undefined check or use optional chaining (`?.`). Never trust seed data shapes as representative of production.
+- **Applies to:** All data-fetching hooks, all components that render user data, any code path that touches entities with optional relations.
+- **Status:** active
+-->

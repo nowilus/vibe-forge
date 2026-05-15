@@ -391,7 +391,7 @@ After Q10.2, do the following — **in this order**:
 
 1. **Summarise the answers** in a compact table. Mark any `🤖` auto-filled rows from option E or `/skip-section`.
 2. **List the files that will be created**, grouped by destination:
-   - At project root: `STATE.md`, `CHANGELOG.md`, `CLIENT_DOCS.md`, `PROJECT_MAP.md`, `RELEASE_NOTES.md`, `PROJECT_RULES.md`, `CODING_RULES.md`, `DESIGN.md`, `PRODUCT.md`, `DATABASE.md`, `DEPLOYMENT.md`, `.env.example` (replacing the placeholder), `.gitignore` (extended), `atomic-prompts/` (empty folder).
+   - At project root: `STATE.md`, `CHANGELOG.md`, `CLIENT_DOCS.md`, `PROJECT_MAP.md`, `RELEASE_NOTES.md`, `LESSONS.md`, `PROJECT_RULES.md`, `CODING_RULES.md`, `DESIGN.md`, `PRODUCT.md`, `DATABASE.md`, `DEPLOYMENT.md`, `.env.example` (replacing the placeholder), `.gitignore` (extended), `atomic-prompts/` (empty folder).
    - Agent-config files based on Q1.1 selection.
    - `/atomic-prompts` skill files based on Q9.
 3. **List the files that will be deleted/moved** based on Q10.1.
@@ -420,7 +420,7 @@ After Q10.2, do the following — **in this order**:
 ```
 Setup complete. Verify the following before your first feature prompt:
 
-[ ] STATE.md, CHANGELOG.md, CLIENT_DOCS.md, PROJECT_MAP.md, RELEASE_NOTES.md exist at the project root with real content (no <<PLACEHOLDERS>>).
+[ ] STATE.md, CHANGELOG.md, CLIENT_DOCS.md, PROJECT_MAP.md, RELEASE_NOTES.md, LESSONS.md exist at the project root with real content (no <<PLACEHOLDERS>>).
 [ ] PROJECT_RULES.md, CODING_RULES.md, DESIGN.md, PRODUCT.md, DATABASE.md, DEPLOYMENT.md exist with real content.
 [ ] At least one agent rule file exists for each tool you said you use.
 [ ] .env.example is stack-specific (Supabase / Firebase / Postgres / Vercel / custom).
