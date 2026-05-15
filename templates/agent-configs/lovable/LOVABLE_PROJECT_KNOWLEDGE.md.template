@@ -1,0 +1,61 @@
+# Lovable Project Knowledge — paste-ready block for <<PROJECT_NAME>>
+
+> This file is **paste-ready** for the Lovable "Project Knowledge" field. Copy the block between the markers below into Lovable. Re-paste after any change to `PROJECT_RULES.md`.
+
+---
+
+<<<COPY_FROM_HERE>>>
+
+You are working on **<<PROJECT_NAME>>** — <<PROJECT_ONE_LINER>>.
+
+The repository contains canonical documentation. Read these before any task, in this order:
+
+1. PROJECT_MAP.md — file/module map.
+2. STATE.md — what currently exists.
+3. PROJECT_RULES.md — binding rules for any agent.
+4. PRODUCT.md — what the product is supposed to do.
+5. Topic-specific:
+   - CODING_RULES.md for code edits.
+   - DESIGN.md for UI work.
+   - DATABASE.md for schema work.
+   - DEPLOYMENT.md for infra / env work.
+
+If the answer is not in those files, ask the user one targeted question with 3-4 candidate answers.
+
+Stack baseline (do not change without approval):
+- Frontend: <<FRONTEND_STACK>>
+- Backend: <<BACKEND_STACK>>
+- Database: <<DATABASE_STACK>>
+- Auth: <<AUTH_STACK>>
+- Storage: <<STORAGE_STACK>>
+- Hosting: <<HOSTING_STACK>>
+
+Language policy:
+- Markdown docs: <<DOCS_LANGUAGE>>
+- Code comments / JSDoc: <<CODE_COMMENT_LANGUAGE>>
+- UI copy: <<UI_LANGUAGE>>
+- Commit messages: <<COMMIT_LANGUAGE>>
+
+Non-negotiables:
+- Doc block on every exported function, readable by a non-technical reader.
+- Loading / empty / error states on every screen.
+- Schema changes only via migration files.
+- Update STATE.md, CHANGELOG.md (append-only), and CLIENT_DOCS.md (when client-visible) in the same change as the code.
+- Never commit secrets; reference env vars only.
+
+For `/atomic-prompts <idea>` requests, do NOT implement inline — instead produce `atomic-prompts/NNNN-<slug>.md` using the schema in `docs/PROMPT_AUTHORING_GUIDE.md` (or the locally installed skill file). Print the path and the count of acceptance criteria, then stop.
+
+When in doubt, ask one targeted question with 3-4 candidate answers. Do not silently choose.
+
+<<<COPY_TO_HERE>>>
+
+---
+
+## Pragmatic Lovable POC notes
+
+If the project is currently in POC mode (`<<POC_OR_PROD>> == POC`):
+
+- Doc rigour may be deferred to a "hardening pass" before going to production.
+- Tests may be skipped for throwaway prototypes (must be noted in STATE.md).
+
+Flip POC → PROD by editing `PROJECT_RULES.md` §13, regenerating this block, and re-pasting it into Lovable.

@@ -1,0 +1,83 @@
+# DATABASE.md — schema rules and reference for <<PROJECT_NAME>>
+
+> **Audience:** every agent or human touching the data layer.
+> **Parent rule file:** `PROJECT_RULES.md`.
+> **Generated from:** `templates/project-rules/DATABASE.md.template` (vibe-forge).
+
+---
+
+## 1. Mandatory rules
+
+1. **Migrations are the only way to change schema.** Never edit the live database directly.
+2. **Migration files are portable documentation.** Name them so the order is obvious: `<<MIGRATION_NAMING>>`.
+3. Every migration MUST be reversible OR explicitly marked as one-way with a rationale comment.
+4. Every table that holds user data MUST have authorisation enforced: <<AUTHZ_STRATEGY>>.
+5. Every table MUST include audit columns: `created_at`, `updated_at` (or stack equivalent). Use the project's standard trigger / hook (<<TIMESTAMP_TRIGGER>>) to maintain `updated_at`.
+6. Enums and constants live in this file. Code references this file's names, never raw strings.
+
+## 2. Stack
+
+- DB engine: **<<DATABASE_STACK>>**.
+- Migration tool: **<<MIGRATION_TOOL>>**.
+- ORM / query layer: **<<DATA_LAYER>>**.
+- Generated types file: **<<DB_TYPES_FILE>>** (regenerated after every migration).
+
+## 3. Entity overview
+
+A high-level table of entities with relationships in plain language. Detailed columns are in the migration files.
+
+| Entity        | Holds                              | Belongs to            | Related to                |
+| ------------- | ---------------------------------- | --------------------- | ------------------------- |
+| <<ENTITY_1>>  | <<ENTITY_1_DESC>>                  | <<ENTITY_1_OWNER>>    | <<ENTITY_1_RELATIONS>>    |
+
+## 4. Enums
+
+List every enum used in the schema. Code MUST reference these names, never raw strings.
+
+```sql
+-- example
+-- CREATE TYPE order_status AS ENUM ('draft','submitted','paid','shipped','cancelled');
+<<ENUMS_DEFINITION>>
+```
+
+## 5. Authorisation model
+
+- Strategy: **<<AUTHZ_STRATEGY>>** (e.g. Supabase RLS, app-level checks, Firebase rules, role-based middleware).
+- Default policy for new tables: **<<DEFAULT_ROW_POLICY>>** (e.g. "deny by default, allow per role").
+- Service-role / admin escape hatch: **<<ADMIN_ESCAPE_HATCH>>** (how the backend bypasses RLS when needed; never use this on the client).
+
+## 6. Realtime / subscriptions
+
+If the stack supports realtime subscriptions:
+
+- Strategy: <<REALTIME_STRATEGY>>.
+- Subscriptions MUST be cleaned up on unmount / signout.
+- Subscribed events MUST respect the authorisation model (no broadcast of unauthorised changes).
+
+## 7. Backups and retention
+
+- Backup cadence: <<BACKUP_CADENCE>>.
+- Backup retention: <<BACKUP_RETENTION>>.
+- Point-in-time recovery: <<PITR_POLICY>>.
+
+## 8. Local dev
+
+- How to run a local DB: <<LOCAL_DB_INSTRUCTIONS>>.
+- How to apply migrations: <<APPLY_MIGRATIONS_CMD>>.
+- How to seed: <<SEED_CMD>>.
+- How to reset: <<RESET_CMD>>.
+
+## 9. Migration log (most recent first)
+
+> Append-only. One entry per migration file.
+
+<<MIGRATION_LOG>>
+
+## 10. Anti-patterns
+
+- ❌ Modifying schema without a migration.
+- ❌ String-typed status fields without an enum.
+- ❌ Foreign keys without `ON DELETE` policy.
+- ❌ Unbounded text columns where a finite enum was possible.
+- ❌ Storing PII without considering retention.
+- ❌ Storing secrets in DB cells.

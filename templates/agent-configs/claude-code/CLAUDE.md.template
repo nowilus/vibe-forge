@@ -1,0 +1,65 @@
+# CLAUDE.md — Claude Code project memory for <<PROJECT_NAME>>
+
+> Derived from `PROJECT_RULES.md`. Do not edit by hand — regenerate after rule changes.
+
+You are working on **<<PROJECT_NAME>>** — <<PROJECT_ONE_LINER>>.
+
+## Read these first, in this order
+
+1. `PROJECT_MAP.md` — file / module map.
+2. `STATE.md` — current truth (features, environments).
+3. `PROJECT_RULES.md` — binding rules for every agent.
+4. `PRODUCT.md` — what the product is supposed to do.
+5. Topic-specific:
+   - `CODING_RULES.md` for any code edit.
+   - `DESIGN.md` for any UI work.
+   - `DATABASE.md` for any schema work.
+   - `DEPLOYMENT.md` for any infra / env work.
+
+If the answer is not in these files, **ask the user** with one targeted question + 3-4 candidate answers. Do not full-scan the repo.
+
+## Stack baseline
+
+| Layer       | Tech                       |
+| ----------- | -------------------------- |
+| Frontend    | <<FRONTEND_STACK>>         |
+| Backend     | <<BACKEND_STACK>>          |
+| Database    | <<DATABASE_STACK>>         |
+| Auth        | <<AUTH_STACK>>             |
+| Storage     | <<STORAGE_STACK>>          |
+| Hosting     | <<HOSTING_STACK>>          |
+
+No new dependencies without explicit user approval.
+
+## Language policy
+
+- Markdown docs: **<<DOCS_LANGUAGE>>**.
+- Code comments: **<<CODE_COMMENT_LANGUAGE>>**.
+- UI copy: **<<UI_LANGUAGE>>**.
+- Commit messages: **<<COMMIT_LANGUAGE>>**.
+
+## Documentation discipline
+
+Every meaningful change updates documentation in the **same edit batch** as the code change:
+
+- `STATE.md` — overwrite affected sections.
+- `CHANGELOG.md` — append, never edit.
+- `CLIENT_DOCS.md` — when behaviour visible to the client changes.
+- `PROJECT_MAP.md` — when structure changes.
+- `RELEASE_NOTES.md` — at release time.
+
+## The `/atomic-prompts` skill
+
+If the user asks for an atomic prompt (via `/atomic-prompts` or by naming the skill), do **not** implement the idea inline. Instead, run the skill at `.claude/skills/atomic-prompts/SKILL.md` which generates `atomic-prompts/NNNN-<slug>.md`. Print path and acceptance-criteria count, then stop.
+
+## Forbidden
+
+- Destructive shell commands without explicit confirmation.
+- Committing on behalf of the user unless asked.
+- "Improving" code outside the request.
+- Editing CHANGELOG.md retroactively.
+- Writing to `templates/` (should not exist post-interview).
+
+## When unsure
+
+One question. 3-4 candidate answers. Wait.

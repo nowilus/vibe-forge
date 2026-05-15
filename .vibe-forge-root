@@ -1,0 +1,19 @@
+# vibe-forge sentinel file
+#
+# DO NOT DELETE before running the INIT_PROMPT.
+#
+# Purpose:
+#   This empty marker is used by INIT_PROMPT_*.md as a strict path check.
+#   When the LLM starts the interview it MUST verify that the current
+#   working directory contains this file. If it does not, the LLM is
+#   instructed to refuse to proceed and ask the user to either:
+#     (a) cd into the cloned vibe-forge folder, or
+#     (b) provide the absolute path so the LLM can re-anchor.
+#
+# After the interview finishes the INIT_PROMPT instructs the LLM to
+# delete this file together with templates/ and other framework-only
+# scaffolding, so the final project tree contains only the user's
+# project files. See README.md "Post-Interview Cleanup" for details.
+
+framework: vibe-forge
+role: sentinel

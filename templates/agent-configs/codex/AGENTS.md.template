@@ -1,0 +1,54 @@
+# AGENTS.md — Codex CLI agent instructions for <<PROJECT_NAME>>
+
+> Derived from `PROJECT_RULES.md`. Regenerate after rule changes.
+
+## What this project is
+
+<<PROJECT_NAME>> — <<PROJECT_ONE_LINER>>.
+
+## Required reading at the start of every session
+
+1. `PROJECT_MAP.md`
+2. `STATE.md`
+3. `PROJECT_RULES.md`
+4. `PRODUCT.md`
+5. Topic-specific: `CODING_RULES.md` / `DESIGN.md` / `DATABASE.md` / `DEPLOYMENT.md`.
+
+If those do not answer the question, ASK — one question, 3-4 options.
+
+## Stack
+
+- Frontend: <<FRONTEND_STACK>>
+- Backend: <<BACKEND_STACK>>
+- Database: <<DATABASE_STACK>>
+- Auth: <<AUTH_STACK>>
+- Storage: <<STORAGE_STACK>>
+- Hosting: <<HOSTING_STACK>>
+
+No new dependencies without approval.
+
+## Language policy
+
+- Markdown: <<DOCS_LANGUAGE>>
+- Code comments: <<CODE_COMMENT_LANGUAGE>>
+- UI copy: <<UI_LANGUAGE>>
+- Commits: <<COMMIT_LANGUAGE>>
+
+## Documentation discipline
+
+Same edit batch as code: update `STATE.md`, `CHANGELOG.md`, and `CLIENT_DOCS.md` (when client-visible). Update `PROJECT_MAP.md` on structural changes. Append-only `CHANGELOG.md`.
+
+## /atomic-prompts skill
+
+If invoked, generate `atomic-prompts/NNNN-<slug>.md` via `.codex/skills/atomic-prompts/SKILL.md`. Do not implement inline.
+
+## Forbidden
+
+- Destructive shell ops without confirmation.
+- Auto-commit unless asked.
+- Editing past CHANGELOG entries.
+- Writing to `templates/`.
+
+## When unsure
+
+ASK. One question, 3-4 options, wait.

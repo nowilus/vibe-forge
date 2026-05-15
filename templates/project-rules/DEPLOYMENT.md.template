@@ -1,0 +1,96 @@
+# DEPLOYMENT.md — hosting, secrets, environments for <<PROJECT_NAME>>
+
+> **Audience:** every agent or human deploying, configuring envs, or rotating secrets.
+> **Parent rule file:** `PROJECT_RULES.md`.
+> **Generated from:** `templates/project-rules/DEPLOYMENT.md.template` (vibe-forge).
+
+---
+
+## 1. Environments
+
+| Env           | Purpose                       | URL                          | Branch / Trigger                |
+| ------------- | ----------------------------- | ---------------------------- | ------------------------------- |
+| local         | Developer machine             | http://localhost:<<PORT>>    | n/a                             |
+| <<PREVIEW>>   | PR previews                   | <<PREVIEW_URL_PATTERN>>      | PRs to `main`                   |
+| staging       | Pre-prod testing              | <<STAGING_URL>>              | merges to `develop` / `staging` |
+| production    | Live                          | <<PROD_URL>>                 | tagged releases                 |
+
+## 2. Hosting
+
+- Platform: **<<HOSTING_STACK>>**.
+- Region(s): <<HOSTING_REGIONS>>.
+- Deployment method: <<DEPLOY_METHOD>>.
+- Rollback method: <<ROLLBACK_METHOD>>.
+
+## 3. CI/CD
+
+- Provider: **<<CICD_STACK>>**.
+- Pipeline overview: <<PIPELINE_OVERVIEW>>.
+- Required checks before merge: <<REQUIRED_CHECKS>>.
+- Deployment gates: <<DEPLOYMENT_GATES>>.
+
+## 4. Secrets policy
+
+- Secret manager: **<<SECRETS_PROVIDER>>**.
+- Rotation cadence: <<SECRET_ROTATION>>.
+- Who has access: <<SECRET_ACCESS>>.
+- How to add a new secret:
+  1. Add a placeholder line to `.env.example` with a comment.
+  2. Store the real value in <<SECRETS_PROVIDER>>.
+  3. Reference it in the deployment configuration.
+  4. Add a `### Security` entry to `CHANGELOG.md`.
+- **Never** commit a real secret. **Never** paste secrets into chat with the AI.
+
+## 5. Environment variables
+
+Every variable used by the app MUST exist in `.env.example` with:
+
+- A one-line comment describing its purpose.
+- Whether it is public (client-side) or server-only.
+- Whether it is required or optional.
+
+See `.env.example` for the current set.
+
+## 6. Domains & DNS
+
+- Apex domain: <<APEX_DOMAIN>>.
+- Subdomain map: <<SUBDOMAIN_MAP>>.
+- DNS provider: <<DNS_PROVIDER>>.
+- SSL: <<SSL_PROVIDER>>.
+
+## 7. Observability
+
+- Logs: <<LOGGING_BACKEND>>.
+- Metrics: <<METRICS_BACKEND>>.
+- Error tracking: <<ERROR_TRACKING>>.
+- Uptime monitoring: <<UPTIME_MONITORING>>.
+- Alert routing: <<ALERT_ROUTING>>.
+
+## 8. Runbook
+
+### Common operations
+
+- **Deploy a hotfix:** <<HOTFIX_RUNBOOK>>.
+- **Roll back:** <<ROLLBACK_RUNBOOK>>.
+- **Rotate a secret:** <<ROTATE_SECRET_RUNBOOK>>.
+- **Restore from backup:** <<RESTORE_RUNBOOK>>.
+
+### Incident response
+
+- On-call channel: <<ONCALL_CHANNEL>>.
+- Severity definitions: <<SEVERITY_MATRIX>>.
+- Post-mortem policy: <<POSTMORTEM_POLICY>>.
+
+## 9. Cost & quotas (rough)
+
+| Service              | Plan           | Approx monthly cost   | Notes                |
+| -------------------- | -------------- | --------------------- | -------------------- |
+| <<SERVICE_1>>        | <<PLAN_1>>     | <<COST_1>>            |                      |
+
+## 10. Decommissioning
+
+If this project ever needs to be shut down, here is the order of operations to avoid orphaned resources or data leaks:
+
+1. <<DECOMMISSION_STEP_1>>
+2. <<DECOMMISSION_STEP_2>>
+3. <<DECOMMISSION_STEP_3>>

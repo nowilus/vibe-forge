@@ -1,0 +1,14 @@
+---
+description: "Coding rules for <<PROJECT_NAME>> — apply when editing code files."
+globs: ["**/*.{ts,tsx,js,jsx,py,go,rs,java,kt,swift,php,rb,cs,vue,svelte}"]
+alwaysApply: false
+---
+
+# Coding rules (summary; full text in `CODING_RULES.md`)
+
+- Doc block on every exported function in <<CODE_COMMENT_LANGUAGE>>, non-technical-reader-friendly.
+- No empty catch blocks. No `console.*` in production code.
+- Loading / empty / error states on every screen.
+- Never trust client claims for authorisation — re-check on server.
+- Never commit secrets. Reference env vars only.
+- Update `STATE.md` + `CHANGELOG.md` + (if relevant) `CLIENT_DOCS.md` in the same diff as the code change.

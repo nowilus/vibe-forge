@@ -1,0 +1,88 @@
+# PROJECT_MAP.md — LLM-optimised map of <<PROJECT_NAME>>
+
+> **Audience:** LLM agents (Cursor / Claude Code / Codex / …) loading context.
+> **Update policy:** updated when the structure changes — new folder, moved module, renamed file, new source-of-truth. Not updated for every commit.
+> **Generated from:** `templates/project-docs/PROJECT_MAP.md.template` (vibe-forge).
+> **Last updated:** <<GENERATED_AT>>
+
+This is the **first file every agent should read** when starting a session. It is intentionally compact, mechanical, and pointer-heavy. Do not duplicate the content of other files here — only point to them.
+
+---
+
+## 0. Sources of truth (read these first)
+
+| Topic                          | File                          | When to read               |
+| ------------------------------ | ----------------------------- | -------------------------- |
+| Project rules for any agent    | `PROJECT_RULES.md`            | Every session.             |
+| Current state (features, env)  | `STATE.md`                    | Every session.             |
+| File map (this file)           | `PROJECT_MAP.md`              | Every session.             |
+| Product spec / user stories    | `PRODUCT.md`                  | Before any feature change. |
+| Coding rules                   | `CODING_RULES.md`             | Before writing code.       |
+| Design system                  | `DESIGN.md`                   | Before any UI change.      |
+| Database schema                | `DATABASE.md`                 | Before any DB change.      |
+| Deployment & secrets           | `DEPLOYMENT.md`               | Before any infra change.   |
+| Client-facing description      | `CLIENT_DOCS.md`              | When client asks.          |
+| Linear history                 | `CHANGELOG.md`                | When digging into history. |
+| Released versions              | `RELEASE_NOTES.md`            | At release time.           |
+
+## 1. Top-level layout
+
+```
+<<PROJECT_NAME>>/
+<<TOP_LEVEL_TREE>>
+```
+
+## 2. Module map
+
+For each major module / folder explain in ONE line what lives there and where to find the source of truth that governs it.
+
+| Path                          | Purpose                                  | Source of truth        |
+| ----------------------------- | ---------------------------------------- | ---------------------- |
+| <<MODULE_1_PATH>>             | <<MODULE_1_PURPOSE>>                     | <<MODULE_1_SOT>>       |
+
+## 3. Routes / screens / endpoints
+
+A table listing the entry points users / clients hit. Routes for web, screens for mobile, endpoints for backends. Keep it short — one line per entry — and link to the file that defines it.
+
+| Entry              | Type      | Defined in              | Notes                  |
+| ------------------ | --------- | ----------------------- | ---------------------- |
+| <<ROUTE_1>>        | <<TYPE>>  | <<ROUTE_1_FILE>>        |                        |
+
+## 4. Data model overview
+
+Pointer-only. Do not duplicate `DATABASE.md` here.
+
+- Schema definition: `DATABASE.md`
+- Migrations folder: `<<MIGRATIONS_DIR>>`
+- Generated types: `<<DB_TYPES_FILE>>`
+- ORM / query layer: `<<ORM_DIR>>`
+
+## 5. Conventions
+
+| Topic                | Convention                                      | Enforced by                |
+| -------------------- | ----------------------------------------------- | -------------------------- |
+| File naming          | <<FILE_NAMING>>                                 | `CODING_RULES.md`          |
+| Component naming     | <<COMPONENT_NAMING>>                            | `CODING_RULES.md`          |
+| Markdown language    | <<DOCS_LANGUAGE>>                               | `PROJECT_RULES.md`         |
+| Code-comment lang.   | <<CODE_COMMENT_LANGUAGE>>                       | `PROJECT_RULES.md`         |
+| Branch naming        | <<BRANCH_NAMING>>                               | `PROJECT_RULES.md`         |
+| Commit messages      | <<COMMIT_MESSAGE_STYLE>>                        | `PROJECT_RULES.md`         |
+
+## 6. Where atomic prompts live
+
+- Folder: `atomic-prompts/`
+- Numbering: zero-padded sequential (`0001-…`, `0002-…`).
+- Skill that generates them: `<<ATOMIC_PROMPTS_SKILL_LOCATION>>` (see `skills/` if installed locally).
+
+## 7. Where NOT to look
+
+Folders intentionally excluded from being touched by agents (unless explicitly asked):
+
+- `node_modules/` (or stack equivalent)
+- `.git/`
+- `.cursor/cache/`, `.claude/cache/`, `.codex/cache/`
+- Anything in `.gitignore`
+
+---
+
+*If you (the agent) cannot answer a question after reading this file plus `STATE.md`, drop one level deeper into the specific source-of-truth listed in §0. Do not full-text-scan the repository.*

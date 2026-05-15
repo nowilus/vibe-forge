@@ -1,0 +1,132 @@
+# CODING_RULES.md — code-level rules for <<PROJECT_NAME>>
+
+> **Audience:** every agent or human writing code in this repository.
+> **Parent rule file:** `PROJECT_RULES.md`. This file is a detailed subsidiary.
+> **Generated from:** `templates/project-rules/CODING_RULES.md.template` (vibe-forge).
+
+---
+
+## 1. Documentation in code
+
+- Every exported function, class, hook, component, or API handler MUST have a documentation block in **<<CODE_COMMENT_LANGUAGE>>**.
+- The block MUST include: a one-line summary, a parameters section, a return section, and (when relevant) an example call.
+- The doc block MUST be written so that a **non-technical handover reader** can guess what the function does without reading the body.
+- For TypeScript / JavaScript: use JSDoc.
+- For Python: use Google-style docstrings.
+- For Go: use the standard `// FunctionName ...` comment style.
+- For other languages: pick the canonical convention and stick to it for the whole project.
+
+Example (JSDoc):
+
+```ts
+/**
+ * Returns the next sequential atomic-prompt ID by scanning the prompts folder.
+ *
+ * Scans `atomic-prompts/` for files matching `^\d{4}-`, parses the highest
+ * existing number, and returns it incremented by one (zero-padded to 4 digits).
+ *
+ * @param promptsDir Absolute or workspace-relative path to the prompts folder.
+ * @returns Zero-padded 4-digit string, e.g. "0007".
+ * @example nextPromptId("atomic-prompts") // "0042"
+ */
+export function nextPromptId(promptsDir: string): string { ... }
+```
+
+## 2. Files & folders
+
+- One responsibility per file. If a file mixes concerns (UI + data fetching + business rules), split it.
+- File naming convention: <<FILE_NAMING>>.
+- Folder naming convention: <<FOLDER_NAMING>>.
+- Components: <<COMPONENT_NAMING>>.
+- Hooks / composables: <<HOOK_NAMING>>.
+- Tests live next to the file they test, named `<file>.test.<ext>` (or stack equivalent).
+
+## 3. Error handling
+
+- No empty `catch` blocks.
+- Errors that originate from user input → render a user-readable message.
+- Errors that originate from the system → log with context and rethrow OR surface a user-facing fallback.
+- All async functions must handle their failure path explicitly.
+- Never `console.log` an error in production code — use the project's logger.
+
+## 4. Loading / empty / error states
+
+Every screen that fetches data MUST handle these explicitly:
+
+- **Loading** — a visible skeleton or spinner; no blank canvas.
+- **Empty** — a labelled empty state with a call to action.
+- **Error** — a labelled error state with a retry button and a support hint.
+
+This rule is enforced at code-review time.
+
+## 5. Forms
+
+- Client-side validation runs on blur and on submit.
+- Server-side validation runs on submit; client trusts only server-side outcomes for state changes.
+- Every error from validation must point at the specific field.
+- Submit buttons disable while a submission is pending.
+- Passwords / tokens / 2FA codes use the right HTML input attributes (`autocomplete`, `inputmode`, `type`).
+
+## 6. Imports & dependencies
+
+- No wildcard imports unless the convention of the language demands it.
+- No unused imports. Lint-enforced.
+- Adding a new dependency requires a `### Security` note in `CHANGELOG.md` describing why and a quick supply-chain check (popularity, maintenance, license).
+
+## 7. Logging & telemetry
+
+- Use the project logger (<<LOGGER_NAME>>), never `console.*` in production code.
+- Never log secrets, full tokens, full PII, or full request bodies.
+- Errors logged in the backend must include: request ID (if any), user ID (if available), timestamp, and stack trace.
+
+## 8. Database access (full rules in `DATABASE.md`)
+
+- Use the project's data layer (<<DATA_LAYER>>). No ad-hoc queries scattered across components.
+- Never compose SQL with string concatenation. Use parameter binding / the ORM.
+- Every write that touches user data goes through a function that respects the auth context.
+
+## 9. Authentication & authorisation
+
+- Never trust client-side claims for authorisation. Always re-check on the server.
+- Tokens / sessions handled by the chosen auth provider (<<AUTH_STACK>>).
+- Sign-out clears local state completely (storage, in-memory caches, query caches).
+
+## 10. Tests
+
+- Every new public function should have at least one happy-path test and one failure-path test.
+- UI components need at least an "it renders" test and an "it handles the error state" test.
+- Tests must be deterministic. No network in unit tests.
+
+## 11. Mobile & responsive
+
+- All screens MUST be tested at <<MIN_VIEWPORT_WIDTH>>px width before merge.
+- Touch targets minimum 44×44 px (or platform equivalent).
+- No hover-only interactions for primary actions.
+
+## 12. Commit & PR hygiene
+
+- Commit message style: <<COMMIT_MESSAGE_STYLE>>.
+- Branch naming: <<BRANCH_NAMING>>.
+- PR descriptions must reference any related atomic-prompt file ID.
+- PRs must update the relevant doc files in the same diff as the code change.
+
+## 13. Pragmatic POC / Lovable mode
+
+If the project is currently in `<<POC_OR_PROD>>` mode and that mode is `POC`, the following rules are relaxed:
+
+- Tests may be skipped for throwaway prototypes (must be noted in `STATE.md`).
+- Some doc rigour may be deferred to a "hardening pass" before going to production.
+
+When `<<POC_OR_PROD>>` flips to `PROD`, all rules above are mandatory.
+
+## 14. Pre-commit checklist
+
+Before considering work "done":
+
+- [ ] Code compiles / passes the linter.
+- [ ] Relevant doc files updated (`STATE.md` / `CHANGELOG.md` / `CLIENT_DOCS.md` as applicable).
+- [ ] Loading / empty / error states present where relevant.
+- [ ] No secrets in the diff.
+- [ ] No `console.*` / debug prints left in.
+- [ ] Mobile view sanity-checked.
+- [ ] Tests pass (or explicit POC-mode skip is justified in `STATE.md`).

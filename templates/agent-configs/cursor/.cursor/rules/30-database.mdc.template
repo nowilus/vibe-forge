@@ -1,0 +1,14 @@
+---
+description: "Database / schema rules for <<PROJECT_NAME>>."
+globs: ["**/migrations/**", "**/*.sql", "**/schema*.{ts,js,py,prisma,rs,go}"]
+alwaysApply: false
+---
+
+# Database rules (summary; full text in `DATABASE.md`)
+
+- All schema changes via a migration file. Never edit the live DB.
+- Migration naming: `<<MIGRATION_NAMING>>`.
+- Every user-data table protected by <<AUTHZ_STRATEGY>>.
+- Every table has `created_at` / `updated_at` (or stack equivalent).
+- Enums live in `DATABASE.md` — code references names, never raw strings.
+- After every schema change: regenerate types (<<DB_TYPES_FILE>>), update `DATABASE.md`, append `CHANGELOG.md` entry, update `STATE.md`.

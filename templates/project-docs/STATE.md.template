@@ -1,0 +1,73 @@
+# STATE.md — current truth about <<PROJECT_NAME>>
+
+> **Audience:** LLM agents + developers.
+> **Update policy:** OVERWRITE only. This file describes what is true **right now**. When a feature is removed, its line is deleted from this file (it lives on in `CHANGELOG.md`). No historical entries here.
+> **Generated from:** `templates/project-docs/STATE.md.template` (vibe-forge).
+> **Last updated:** <<GENERATED_AT>>
+
+---
+
+## 1. One-line project summary
+
+<<PROJECT_ONE_LINER>>
+
+## 2. Stack snapshot
+
+| Layer            | Technology                  |
+| ---------------- | --------------------------- |
+| Frontend         | <<FRONTEND_STACK>>          |
+| Backend          | <<BACKEND_STACK>>           |
+| Database         | <<DATABASE_STACK>>          |
+| Authentication   | <<AUTH_STACK>>              |
+| File storage     | <<STORAGE_STACK>>           |
+| Hosting          | <<HOSTING_STACK>>           |
+| CI/CD            | <<CICD_STACK>>              |
+| Observability    | <<OBSERVABILITY_STACK>>     |
+
+## 3. Implemented features (what works right now)
+
+For each feature, list:
+- **Name** — short identifier.
+- **Status** — `done` / `in-progress` / `flaky` / `deprecated-but-still-on`.
+- **Description** — one paragraph.
+- **Entry points** — files, routes, screens, APIs.
+- **Depends on** — env vars, third-party services, tables.
+- **How to verify it works** — 1-3 manual steps.
+- **Known limitations** — what it does not handle.
+
+> ⚠️ When a feature is removed or replaced, **delete** its entry from this file. Do not strike it through, do not annotate it as "old". The historical record lives in `CHANGELOG.md`.
+
+<<FEATURES_LIST>>
+
+## 4. Active environments
+
+| Env         | URL                       | Purpose                       | Notes                            |
+| ----------- | ------------------------- | ----------------------------- | -------------------------------- |
+| local       | http://localhost:<<PORT>> | Development                   |                                  |
+| staging     | <<STAGING_URL>>           | Pre-prod testing              |                                  |
+| production  | <<PROD_URL>>              | Live                          |                                  |
+
+## 5. Open known issues (non-blocking)
+
+A bullet list of known limitations that are accepted today. Move items out of this list as they get fixed (and add a CHANGELOG entry).
+
+- <<OPEN_ISSUE_1>>
+
+## 6. Where to look for what
+
+A pointer-only map. Do NOT duplicate content here — point to the canonical file.
+
+| If you want to know …       | Read                          |
+| --------------------------- | ----------------------------- |
+| What the product is for     | `CLIENT_DOCS.md`              |
+| File / module map           | `PROJECT_MAP.md`              |
+| Rules every agent obeys     | `PROJECT_RULES.md`            |
+| Design system               | `DESIGN.md`                   |
+| Database schema             | `DATABASE.md`                 |
+| Hosting & secrets           | `DEPLOYMENT.md`               |
+| Full history                | `CHANGELOG.md`                |
+| Released versions           | `RELEASE_NOTES.md`            |
+
+---
+
+*If you (the LLM) are reading this in a fresh session: this file plus `PROJECT_MAP.md` should be enough to answer 80% of "where is X?" questions. Only descend into source files when these two are not enough.*

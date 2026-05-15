@@ -1,0 +1,44 @@
+# Release notes — <<PROJECT_NAME>>
+
+> **Audience:** end-users, the client, stakeholders.
+> **Update policy:** add a new section per released version. Past sections are immutable. This file is **derived from `CHANGELOG.md`** at release time, but rewritten in user-facing language (no "endpoint", "schema", "migration").
+> **Generated from:** `templates/project-docs/RELEASE_NOTES.md.template` (vibe-forge).
+
+---
+
+## How to read this file
+
+- Every section is one **release** of the product.
+- Most recent release is at the top.
+- The full developer-oriented history lives in `CHANGELOG.md`. This file is the summary you would publish on a status page or send to a customer.
+
+---
+
+## [Unreleased]
+
+Nothing released yet. The current development state is tracked in `STATE.md` and `CHANGELOG.md`.
+
+<!--
+
+## [0.1.0] — YYYY-MM-DD
+
+### Highlights
+A short paragraph describing what this version is for, in plain language.
+
+### What's new
+- Feature one — what it does, when you would use it.
+- Feature two — same.
+
+### What changed
+- Behaviour adjustments visible to the user.
+
+### What's gone
+- Anything we removed in this version, with a one-line rationale.
+
+### Known limitations
+- Things that do not work yet but might surprise the user.
+
+### Upgrade notes
+- Anything the user has to do (re-login, re-configure, accept new terms, etc.).
+
+-->

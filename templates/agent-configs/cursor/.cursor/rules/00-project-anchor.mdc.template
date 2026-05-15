@@ -1,0 +1,23 @@
+---
+description: "Project anchor — read this first in any session for <<PROJECT_NAME>>."
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Project anchor
+
+When starting any task, read in this order:
+
+1. `PROJECT_MAP.md`
+2. `STATE.md`
+3. `PROJECT_RULES.md`
+4. Subsidiary file by topic:
+   - Code edit → `CODING_RULES.md`
+   - UI change → `DESIGN.md`
+   - DB change → `DATABASE.md`
+   - Infra/env → `DEPLOYMENT.md`
+   - Feature scope → `PRODUCT.md`
+
+If the answer is not in these files, ASK the user — do not full-scan the repo.
+
+For `/atomic-prompts` invocations, do not implement inline; generate `atomic-prompts/NNNN-<slug>.md` instead. Schema lives in `.cursor/commands/atomic-prompts.md`.

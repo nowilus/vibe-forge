@@ -1,0 +1,159 @@
+# DESIGN.md — design system for <<PROJECT_NAME>>
+
+> **Audience:** every agent or human building UI in this repository.
+> **Parent rule file:** `PROJECT_RULES.md`. This is the **only** acceptable source of design tokens. Inline values that contradict this file are bugs.
+> **Generated from:** `templates/project-rules/DESIGN.md.template` (vibe-forge).
+
+---
+
+## 1. Design philosophy
+
+<<DESIGN_PHILOSOPHY_PARAGRAPH>>
+
+Core principles (in order):
+
+1. <<DESIGN_PRINCIPLE_1>>
+2. <<DESIGN_PRINCIPLE_2>>
+3. <<DESIGN_PRINCIPLE_3>>
+
+## 2. Colour palette
+
+### Brand
+
+| Token              | Value          | Used for                        |
+| ------------------ | -------------- | ------------------------------- |
+| `--brand-primary`  | <<BRAND_PRIMARY>>   | Primary actions, focus rings.   |
+| `--brand-secondary`| <<BRAND_SECONDARY>> | Secondary actions, accents.     |
+
+### Neutrals
+
+| Token              | Value           | Used for                        |
+| ------------------ | --------------- | ------------------------------- |
+| `--bg`             | <<NEUTRAL_BG>>      | Page background.                |
+| `--surface`        | <<NEUTRAL_SURFACE>> | Card / panel background.        |
+| `--border`         | <<NEUTRAL_BORDER>>  | Dividers, input borders.        |
+| `--text-primary`   | <<TEXT_PRIMARY>>    | Main text.                      |
+| `--text-secondary` | <<TEXT_SECONDARY>>  | Meta text, helper text.         |
+| `--text-muted`     | <<TEXT_MUTED>>      | Disabled / placeholder.         |
+
+### Semantic / status
+
+| Token             | Value             | Used for                |
+| ----------------- | ----------------- | ----------------------- |
+| `--success`       | <<SUCCESS_COLOR>> | Success messages.       |
+| `--warning`       | <<WARNING_COLOR>> | Warning messages.       |
+| `--error`         | <<ERROR_COLOR>>   | Error messages.         |
+| `--info`          | <<INFO_COLOR>>    | Info messages.          |
+
+### Dark mode
+
+Dark mode policy: <<DARK_MODE_POLICY>>. If enabled, the tokens above have dark-mode counterparts named `--…-dark`.
+
+## 3. Typography
+
+- Primary font: **<<FONT_PRIMARY>>**.
+- Mono font: **<<FONT_MONO>>**.
+- Type scale: <<TYPE_SCALE>>.
+- Line-height policy: <<LINE_HEIGHT_POLICY>>.
+- Maximum line length: <<MAX_LINE_LENGTH>>.
+
+Hierarchy:
+
+| Role         | Token         | Size      | Weight     |
+| ------------ | ------------- | --------- | ---------- |
+| Display      | `--text-display` | <<>>   | <<>>       |
+| H1           | `--text-h1`      | <<>>   | <<>>       |
+| H2           | `--text-h2`      | <<>>   | <<>>       |
+| H3           | `--text-h3`      | <<>>   | <<>>       |
+| Body         | `--text-body`    | <<>>   | <<>>       |
+| Small        | `--text-small`   | <<>>   | <<>>       |
+
+## 4. Spacing & layout
+
+- Spacing scale: <<SPACING_SCALE>> (e.g. 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64).
+- Grid: <<GRID_RULE>>.
+- Page max width: <<PAGE_MAX_WIDTH>>.
+- Side gutters: <<SIDE_GUTTERS>>.
+- Section vertical rhythm: <<SECTION_RHYTHM>>.
+
+## 5. Shadows & elevation
+
+| Token         | Value          | Used for           |
+| ------------- | -------------- | ------------------ |
+| `--shadow-sm` | <<SHADOW_SM>>  | Inputs, chips.     |
+| `--shadow-md` | <<SHADOW_MD>>  | Cards.             |
+| `--shadow-lg` | <<SHADOW_LG>>  | Modals, popovers.  |
+
+## 6. Border radius
+
+| Token            | Value           | Used for                    |
+| ---------------- | --------------- | --------------------------- |
+| `--radius-sm`    | <<RADIUS_SM>>   | Chips, badges.              |
+| `--radius-md`    | <<RADIUS_MD>>   | Buttons, inputs.            |
+| `--radius-lg`    | <<RADIUS_LG>>   | Cards.                      |
+| `--radius-full`  | 9999px          | Avatars, pills.             |
+
+## 7. Icons
+
+- Icon library: **<<ICON_LIBRARY>>**. No mixing with other libraries.
+- Stroke width: <<ICON_STROKE>>.
+- Standard sizes: 16 / 20 / 24 px (or stack equivalent).
+- Animation policy: <<ICON_ANIMATION_POLICY>>.
+
+## 8. Motion
+
+- Default duration: <<MOTION_DURATION_DEFAULT>>.
+- Easing: <<MOTION_EASING>>.
+- Reduced-motion: respect `prefers-reduced-motion` and disable non-essential animations.
+
+## 9. Component standards
+
+For each component, define:
+
+- **Anatomy** — parts.
+- **States** — default, hover, focus-visible, active, disabled, loading, error.
+- **Sizes** — sm / md / lg.
+- **Variants** — primary / secondary / ghost / destructive.
+- **Don'ts** — anti-patterns.
+
+Required components:
+
+- Button (`<<BUTTON_NOTES>>`)
+- Input + label (`<<INPUT_NOTES>>`)
+- Select (`<<SELECT_NOTES>>`)
+- Modal / dialog (`<<MODAL_NOTES>>`)
+- Toast / snackbar (`<<TOAST_NOTES>>`)
+- Card (`<<CARD_NOTES>>`)
+- Table (`<<TABLE_NOTES>>`)
+- Badge / status pill (`<<BADGE_NOTES>>`)
+- Avatar (`<<AVATAR_NOTES>>`)
+- Empty state (`<<EMPTY_STATE_NOTES>>`)
+
+## 10. Page-level rules
+
+- Every page has: header, primary content area, optional sidebar, optional footer.
+- Every page handles loading, empty, error explicitly (see `CODING_RULES.md` §4).
+- Every page has a clear primary action.
+
+## 11. Accessibility
+
+- WCAG target: **<<WCAG_LEVEL>>**.
+- All interactive elements keyboard reachable.
+- Focus ring visible on `:focus-visible`.
+- Colour is never the only signal — pair with text or icon.
+- Form errors announced via `aria-describedby`.
+
+## 12. Print / export
+
+If the product produces printable output (invoices, reports, PDFs):
+
+- Page size: <<PRINT_PAGE_SIZE>>.
+- Margins: <<PRINT_MARGINS>>.
+- Black-and-white safety: yes/no.
+
+## 13. Brand voice (UI copy)
+
+- Tone: <<BRAND_TONE>>.
+- Pronoun: <<BRAND_PRONOUN>>.
+- Sentence case vs Title Case: <<CASE_POLICY>>.
+- Localisation rules: see `PROJECT_RULES.md` §2.

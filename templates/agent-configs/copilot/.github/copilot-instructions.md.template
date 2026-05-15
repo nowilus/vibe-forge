@@ -1,0 +1,47 @@
+# GitHub Copilot — repository instructions for <<PROJECT_NAME>>
+
+> Derived from `PROJECT_RULES.md`. Regenerate after rule changes.
+
+## Read first
+
+1. `PROJECT_MAP.md`
+2. `STATE.md`
+3. `PROJECT_RULES.md`
+4. `PRODUCT.md`
+5. Topic-specific: `CODING_RULES.md` / `DESIGN.md` / `DATABASE.md` / `DEPLOYMENT.md`.
+
+## Stack
+
+- Frontend: <<FRONTEND_STACK>>
+- Backend: <<BACKEND_STACK>>
+- Database: <<DATABASE_STACK>>
+- Auth: <<AUTH_STACK>>
+- Hosting: <<HOSTING_STACK>>
+
+No new dependencies without explicit approval.
+
+## Language policy
+
+- Markdown: <<DOCS_LANGUAGE>>
+- Code comments: <<CODE_COMMENT_LANGUAGE>>
+- UI copy: <<UI_LANGUAGE>>
+- Commit messages: <<COMMIT_LANGUAGE>>
+
+## Must-do for any change
+
+- Doc block on every exported function (<<CODE_COMMENT_LANGUAGE>>).
+- Loading / empty / error states on every screen.
+- Schema changes via migration file only.
+- Same-diff updates to `STATE.md`, `CHANGELOG.md` (append), `CLIENT_DOCS.md` (when client-visible).
+- Never commit secrets.
+
+## Must-not-do
+
+- Destructive shell ops without confirmation.
+- Edit past CHANGELOG entries.
+- Introduce a new framework/library without approval.
+- Touch `templates/` (should be deleted after the interview).
+
+## When unsure
+
+Ask one targeted question with 3-4 candidate answers and wait.

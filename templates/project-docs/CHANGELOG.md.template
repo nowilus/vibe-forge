@@ -1,0 +1,43 @@
+# CHANGELOG — <<PROJECT_NAME>>
+
+> **Audience:** developers, future you.
+> **Update policy:** APPEND-ONLY. Never edit or remove past entries. Entries are grouped per date (or per version, after a release). If a feature is later removed, **add a new entry** with `### Removed` — do not delete the old entry that introduced it.
+> **Generated from:** `templates/project-docs/CHANGELOG.md.template` (vibe-forge).
+> **Format:** based on [Keep a Changelog](https://keepachangelog.com/).
+
+---
+
+## [Unreleased]
+
+### Added
+- `<<GENERATED_AT>>` — Project bootstrapped from `vibe-forge` using `INIT_PROMPT_<<INIT_VARIANT>>.md`. Stack: <<FRONTEND_STACK>> / <<BACKEND_STACK>> / <<DATABASE_STACK>>. Initial documentation files created (`STATE.md`, `CLIENT_DOCS.md`, `PROJECT_MAP.md`, `RELEASE_NOTES.md`, `PROJECT_RULES.md`, plus rule subsidiaries).
+
+### Changed
+- (none yet)
+
+### Removed
+- (none yet)
+
+### Fixed
+- (none yet)
+
+### Security
+- `<<GENERATED_AT>>` — Initial security baseline applied: <<SECURITY_BASELINE_SUMMARY>>.
+
+---
+
+## How to write a good CHANGELOG entry
+
+- One line per change. If you need more than three lines, you are describing two changes — split them.
+- Reference the atomic prompt (if any) by its ID: `(prompt: 0007-add-google-login)`.
+- Reference the commit short SHA if known.
+- Prefer past tense ("Added Google login") over imperative ("Add Google login") — this is history, not instructions.
+- When a feature is removed, also delete it from `STATE.md`. CHANGELOG keeps the memory; STATE keeps the truth.
+
+---
+
+## Release history
+
+When you cut a release, copy the contents of `[Unreleased]` into a new dated heading below, e.g. `## [0.1.0] — 2026-06-01`, then leave `[Unreleased]` empty for the next cycle. Mirror the highlights into `RELEASE_NOTES.md` in user-facing language.
+
+<!-- ## [0.1.0] — YYYY-MM-DD -->

@@ -1,0 +1,15 @@
+---
+description: "Design rules for <<PROJECT_NAME>> — apply when editing UI / styles."
+globs: ["**/*.{tsx,jsx,vue,svelte,css,scss,sass,html}"]
+alwaysApply: false
+---
+
+# Design rules (summary; full text in `DESIGN.md`)
+
+- Use only tokens from `DESIGN.md`. No ad-hoc colours, no inline contradictions.
+- Icon library: <<ICON_LIBRARY>> only.
+- Every interactive element has default / hover / focus-visible / active / disabled / loading / error.
+- Every page has loading, empty, error states.
+- Respect `prefers-reduced-motion`.
+- Mobile-first; minimum viewport <<MIN_VIEWPORT_WIDTH>>px.
+- WCAG target: <<WCAG_LEVEL>>.

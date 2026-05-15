@@ -1,0 +1,157 @@
+# PROJECT_RULES.md — single source of truth for every agent on <<PROJECT_NAME>>
+
+> **Audience:** every AI agent that touches this repository (Cursor, Claude Code, Codex, Lovable, Windsurf, Copilot, …) plus every human contributor.
+> **Status:** binding. All tool-specific rule files (`.cursorrules`, `CLAUDE.md`, `AGENTS.md`, `.windsurfrules`, `.github/copilot-instructions.md`, Lovable Project Knowledge) are **derived from this file**. When this file changes, those files must be regenerated.
+> **Generated from:** `templates/project-rules/PROJECT_RULES.md.template` (vibe-forge).
+> **Last updated:** <<GENERATED_AT>>
+
+---
+
+## 0. Reading order at the start of every session
+
+1. `PROJECT_MAP.md` — to know where things are.
+2. `STATE.md` — to know what currently exists.
+3. **This file** — to know the rules.
+4. `PRODUCT.md` — to know what the product is supposed to do.
+5. The relevant subsidiary rule file:
+   - `CODING_RULES.md` for code edits.
+   - `DESIGN.md` for UI changes.
+   - `DATABASE.md` for schema / migration changes.
+   - `DEPLOYMENT.md` for infra / env changes.
+
+Do not full-text-scan the repository. If the answer is not in the files above, ask the user.
+
+---
+
+## 1. Stack baseline (do not change without permission)
+
+| Layer            | Technology                  | Source of detail        |
+| ---------------- | --------------------------- | ----------------------- |
+| Frontend         | <<FRONTEND_STACK>>          | `STATE.md`              |
+| Backend          | <<BACKEND_STACK>>           | `STATE.md`              |
+| Database         | <<DATABASE_STACK>>          | `DATABASE.md`           |
+| Authentication   | <<AUTH_STACK>>              | `DATABASE.md`           |
+| File storage     | <<STORAGE_STACK>>           | `STATE.md`              |
+| Hosting          | <<HOSTING_STACK>>           | `DEPLOYMENT.md`         |
+| CI/CD            | <<CICD_STACK>>              | `DEPLOYMENT.md`         |
+| Observability    | <<OBSERVABILITY_STACK>>     | `DEPLOYMENT.md`         |
+
+If you (the agent) need to add a new dependency, you MUST:
+
+1. Explain why a new dependency is needed.
+2. Check whether the existing stack already provides the capability.
+3. Wait for explicit user confirmation before adding it.
+
+## 2. Language policy
+
+- Markdown documentation language: **<<DOCS_LANGUAGE>>**.
+- Code comment / JSDoc / docstring language: **<<CODE_COMMENT_LANGUAGE>>**.
+- UI copy language: **<<UI_LANGUAGE>>** (additional locales: <<EXTRA_LOCALES>>).
+- Commit messages: **<<COMMIT_LANGUAGE>>**.
+
+## 3. Documentation discipline (this is the heart of the framework)
+
+Every change MUST update the relevant documentation files in the same edit batch as the code change. The split is intentional and rigid:
+
+| File                | When to update                                            | How                                  |
+| ------------------- | --------------------------------------------------------- | ------------------------------------ |
+| `STATE.md`          | When current truth changes (feature added/removed/altered)| Overwrite affected sections.         |
+| `CHANGELOG.md`      | Every meaningful change                                   | Append a dated entry, never edit.    |
+| `CLIENT_DOCS.md`    | When client-visible behaviour changes                     | Rewrite affected paragraph.          |
+| `PROJECT_MAP.md`    | When structure changes (files moved/added/renamed)        | Update pointer rows.                 |
+| `RELEASE_NOTES.md`  | At each release                                           | Add new version section.             |
+| `PRODUCT.md`        | When requirements change                                  | Update affected user-story.          |
+| `DATABASE.md`       | At every schema change                                    | Add migration entry.                 |
+| `DESIGN.md`         | When design tokens / components change                    | Update affected section.             |
+| `DEPLOYMENT.md`     | When envs / secrets / hosting changes                     | Update affected section.             |
+
+If you make a change without updating the relevant doc, **you are not done**.
+
+## 4. Coding rules (high-level — full text in `CODING_RULES.md`)
+
+- Every function MUST have a documentation block (JSDoc / docstring / equivalent) in the chosen code-comment language.
+- Documentation blocks MUST be self-explanatory enough that a non-technical handover reader can understand the function's purpose.
+- No `// TODO` left behind without an `atomic-prompts/` ticket file.
+- No dead code. If a code path is not used, delete it and add a `CHANGELOG` entry.
+- No hard-coded secrets. Ever. All secrets live in `.env` and are referenced via the stack's env mechanism.
+- No silent error swallowing. Every catch must log and either rethrow or surface a user-facing error.
+- No "magic" file names. Anything imported from outside the file must be discoverable through `PROJECT_MAP.md`.
+
+## 5. Security baseline
+
+- Auth strategy: <<AUTH_STRATEGY>>.
+- Authorisation strategy: <<AUTHZ_STRATEGY>> (e.g. RLS, app-level checks).
+- Secrets: stored in <<SECRETS_PROVIDER>>; never in client-side code.
+- PII handling: <<PII_POLICY>>.
+- Logging policy: never log full PII, tokens, or passwords. Mask before logging.
+- Third-party SDK reviews: any new third-party SDK requires a one-paragraph justification added to `CHANGELOG.md` under `### Security`.
+
+## 6. Design discipline (high-level — full text in `DESIGN.md`)
+
+- Only colours, fonts, spacing, icons declared in `DESIGN.md` may be used.
+- No inline styles that contradict the design tokens.
+- Every interactive component must have: default, hover, focus, active, disabled, loading, error states.
+- Every page must have: loading state, empty state, error state.
+- Every form must have: client-side validation, server-side validation, user-readable errors.
+
+## 7. Mobile and accessibility
+
+- Minimum supported width: <<MIN_VIEWPORT_WIDTH>>px.
+- Mobile-first: <<MOBILE_FIRST_POLICY>>.
+- WCAG target: <<WCAG_LEVEL>>.
+- Keyboard navigation: required for every interactive element.
+- Colour contrast: must pass the WCAG level above for all text.
+
+## 8. Database discipline (high-level — full text in `DATABASE.md`)
+
+- All schema changes go through a migration file. No direct edits to the live database.
+- Migration files are named: `<<MIGRATION_NAMING>>`.
+- Every table that holds user data must have row-level security or app-level equivalent.
+- Every table must have `created_at`, `updated_at` (or stack equivalent).
+- Every change to schema must update `DATABASE.md` and `STATE.md` and add an entry to `CHANGELOG.md`.
+
+## 9. Iterative changes
+
+When the user requests a change that contradicts current state:
+
+1. Confirm understanding by restating the change in one paragraph.
+2. List which files will be touched.
+3. List which docs will be updated.
+4. Wait for "go".
+5. Make the change.
+6. Update docs.
+7. Report back with a checklist.
+
+## 10. The `/atomic-prompts` skill
+
+When the user types `/atomic-prompts <idea>` (or invokes the skill by name), the agent MUST:
+
+1. Refuse to *implement* the idea inline.
+2. Generate a structured prompt file in `atomic-prompts/NNNN-<slug>.md` following the schema in `docs/PROMPT_AUTHORING_GUIDE.md` (or in `<<ATOMIC_PROMPTS_SKILL_LOCATION>>` if the framework docs were removed).
+3. Print the path of the generated file and the count of acceptance criteria.
+
+This rule exists to keep the prompt artefact reusable across tools.
+
+## 11. Forbidden behaviours
+
+- Do not run destructive shell commands (`rm -rf`, `DROP TABLE`, `git push --force`) without explicit confirmation.
+- Do not commit on behalf of the user unless they explicitly ask.
+- Do not "improve" code that was not part of the request.
+- Do not introduce a new framework / library / tool without explicit approval.
+- Do not edit `CHANGELOG.md` retroactively.
+- Do not delete entries from `CHANGELOG.md`.
+- Do not write to `templates/` after the interview ends — that folder is supposed to be gone.
+
+## 12. When in doubt
+
+Ask. Specifically:
+
+- Ask a single targeted question.
+- Offer 3-4 candidate answers.
+- Wait for the answer before proceeding.
+
+This is the same protocol the original interview used. Keep using it for the lifetime of the project.
+
+---
+
+*Derived files: `.cursorrules`, `CLAUDE.md`, `AGENTS.md`, `.windsurfrules`, `.github/copilot-instructions.md`, Lovable Project Knowledge. If you change rules here, regenerate those.*

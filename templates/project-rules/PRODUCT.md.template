@@ -1,0 +1,108 @@
+# PRODUCT.md — what <<PROJECT_NAME>> is supposed to do
+
+> **Audience:** every agent that implements features + every human writing prompts.
+> **Parent rule file:** `PROJECT_RULES.md`. This is the **functional source of truth**: every feature decision must be reconcilable with this file.
+> **Generated from:** `templates/project-rules/PRODUCT.md.template` (vibe-forge).
+
+---
+
+## 1. Elevator pitch
+
+<<PROJECT_ONE_LINER>>
+
+## 2. Long-form description
+
+<<PROJECT_LONG_DESCRIPTION>>
+
+## 3. Business context
+
+- **Industry / domain:** <<INDUSTRY>>.
+- **Regulatory environment:** <<REGULATIONS>>.
+- **Commercial model:** <<COMMERCIAL_MODEL>> (one-off, subscription, freemium, internal, …).
+- **Geographic scope:** <<GEO_SCOPE>>.
+
+## 4. Target audience
+
+### Primary persona
+
+- **Who:** <<PERSONA_1_WHO>>.
+- **Pain:** <<PERSONA_1_PAIN>>.
+- **Win condition:** <<PERSONA_1_WIN>>.
+- **Tech-savviness:** <<PERSONA_1_TECH>>.
+
+### Secondary personas
+
+<<PERSONA_2_BLOCK>>
+
+<<PERSONA_3_BLOCK>>
+
+## 5. User roles
+
+| Role            | Description                       | Can do                              | Cannot do                          |
+| --------------- | --------------------------------- | ----------------------------------- | ---------------------------------- |
+| <<ROLE_1>>      | <<ROLE_1_DESC>>                   | <<ROLE_1_CAN>>                      | <<ROLE_1_CANNOT>>                  |
+
+## 6. Core processes (happy paths)
+
+For each core process, describe:
+
+- **Name** and one-line goal.
+- **Actor** (user role).
+- **Pre-conditions** (auth state, data state).
+- **Steps** (numbered, user-visible only).
+- **Post-conditions** (what changed in the system after).
+- **Failure modes** (what can go wrong).
+
+### Process A — <<PROCESS_A_NAME>>
+
+<<PROCESS_A_BODY>>
+
+### Process B — <<PROCESS_B_NAME>>
+
+<<PROCESS_B_BODY>>
+
+## 7. User stories (in priority order)
+
+Use the `As a … I want … so that …` format. Each story has:
+
+- **ID** (`US-XXX`).
+- **Status** — `done` / `in-progress` / `planned` / `dropped`.
+- **Acceptance criteria** (verifiable, observable).
+
+### US-001 — <<US_1_TITLE>>
+
+- **Status:** <<US_1_STATUS>>
+- **Story:** As a <<US_1_AS>>, I want <<US_1_I_WANT>>, so that <<US_1_SO_THAT>>.
+- **Acceptance criteria:**
+  - [ ] <<US_1_AC_1>>
+  - [ ] <<US_1_AC_2>>
+
+<<MORE_USER_STORIES>>
+
+## 8. Data the product reasons about (high-level)
+
+This is the conceptual entity list. The physical schema lives in `DATABASE.md`.
+
+| Entity       | What it represents              | Owned by         | Related to             |
+| ------------ | ------------------------------- | ---------------- | ---------------------- |
+| <<ENTITY_1>> | <<ENTITY_1_DESC>>               | <<ENTITY_1_OWNER>>| <<ENTITY_1_RELATIONS>>|
+
+## 9. Out of scope (explicit)
+
+Things this product **deliberately does not do**, so future contributors do not "fix" them as oversights.
+
+- <<OUT_OF_SCOPE_1>>
+- <<OUT_OF_SCOPE_2>>
+
+## 10. Glossary
+
+| Term         | Meaning                              |
+| ------------ | ------------------------------------ |
+| <<TERM_1>>   | <<TERM_1_MEANING>>                   |
+
+## 11. Open product questions
+
+Things still undecided. These need answers before the related feature can be built.
+
+- <<OPEN_Q_1>>
+- <<OPEN_Q_2>>

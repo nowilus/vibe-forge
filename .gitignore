@@ -1,0 +1,28 @@
+# --- vibe-forge baseline .gitignore -----------------------------------------
+# This is the MINIMAL .gitignore shipped with the framework.
+# After running INIT_PROMPT, the LLM will append stack-specific entries
+# (node_modules, .next, dist, .venv, etc.) based on your answers.
+
+# Secrets & environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local-only LLM agent state (used by some tools)
+.cursor/scratch/
+.cursor/cache/
+.claude/cache/
+.codex/cache/
+
+# vibe-forge internal artefacts created during interview
+.vibe-forge/used/

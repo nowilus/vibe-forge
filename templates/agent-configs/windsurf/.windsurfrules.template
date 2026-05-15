@@ -1,0 +1,50 @@
+# .windsurfrules — generated for <<PROJECT_NAME>> from PROJECT_RULES.md
+
+Project: <<PROJECT_NAME>> — <<PROJECT_ONE_LINER>>.
+
+## Required reading (in this order)
+
+1. PROJECT_MAP.md
+2. STATE.md
+3. PROJECT_RULES.md
+4. PRODUCT.md
+5. Topic-specific: CODING_RULES.md / DESIGN.md / DATABASE.md / DEPLOYMENT.md
+
+If the answer is not in these files, ASK — one targeted question with 3-4 options.
+
+## Stack baseline
+
+- Frontend: <<FRONTEND_STACK>>
+- Backend: <<BACKEND_STACK>>
+- Database: <<DATABASE_STACK>>
+- Auth: <<AUTH_STACK>>
+- Storage: <<STORAGE_STACK>>
+- Hosting: <<HOSTING_STACK>>
+
+No new dependencies without explicit approval.
+
+## Language policy
+
+- Markdown: <<DOCS_LANGUAGE>>
+- Code comments: <<CODE_COMMENT_LANGUAGE>>
+- UI copy: <<UI_LANGUAGE>>
+- Commit messages: <<COMMIT_LANGUAGE>>
+
+## Documentation discipline
+
+Every code change in the same diff updates: STATE.md, CHANGELOG.md (append), and CLIENT_DOCS.md if client-visible. PROJECT_MAP.md on structural changes. Never edit past CHANGELOG entries.
+
+## /atomic-prompts
+
+Do not implement an `/atomic-prompts` request inline. Generate `atomic-prompts/NNNN-<slug>.md` following the schema in `docs/PROMPT_AUTHORING_GUIDE.md` (if the framework docs are kept) or in the locally installed skill file.
+
+## Forbidden
+
+- Destructive shell ops without confirmation.
+- Auto-commit unless asked.
+- Re-editing CHANGELOG history.
+- Writing to `templates/`.
+
+## When unsure
+
+One question. 3-4 candidate answers. Wait.

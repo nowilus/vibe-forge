@@ -1,0 +1,72 @@
+# <<PROJECT_NAME>> — project documentation
+
+> **Audience:** the client, or anyone non-technical who needs to understand this project.
+> **Tone:** friendly, plain-language, no jargon. Imagine you are explaining the product to a smart person who has never written a line of code.
+> **Update policy:** updated whenever **product behaviour visible to the client** changes. Safe to send to the client at any time.
+> **Generated from:** `templates/project-docs/CLIENT_DOCS.md.template` (vibe-forge).
+> **Last updated:** <<GENERATED_AT>>
+
+---
+
+## What this product is
+
+<<PROJECT_LONG_DESCRIPTION>>
+
+## Who it is for
+
+<<TARGET_AUDIENCE_LONG>>
+
+## What problem it solves
+
+<<PROBLEM_STATEMENT>>
+
+## How it works, in one minute
+
+<<HOW_IT_WORKS_NON_TECHNICAL>>
+
+## Main features
+
+For each feature explain:
+
+- **What it does** — in user-facing language. No "endpoint", "schema", "RLS".
+- **When you would use it** — a typical scenario.
+- **What you see** — screens, buttons, results.
+- **Any limits** — fair use, plan limits, things it does not handle yet.
+
+<<CLIENT_FEATURES_LIST>>
+
+## What we built it with
+
+A short, friendly description of the technology choices, written for a non-technical reader. The point is not to teach them React or Postgres — the point is to make them feel confident the foundation is sensible.
+
+- **Where the app runs:** <<HOSTING_HUMAN>>
+- **Where the data lives:** <<DATABASE_HUMAN>>
+- **How we keep it secure:** <<SECURITY_HUMAN>>
+- **How we handle backups:** <<BACKUPS_HUMAN>>
+
+## What it costs to run
+
+If applicable, list the recurring services and (rough) monthly cost ranges, so the client can budget after handover.
+
+| Service        | Purpose                | Plan / tier            | Approx monthly cost |
+| -------------- | ---------------------- | ---------------------- | ------------------- |
+| <<SERVICE_1>>  | <<SERVICE_1_PURPOSE>>  | <<SERVICE_1_PLAN>>     | <<SERVICE_1_COST>>  |
+
+## Support & handover
+
+- **How to report a problem:** <<SUPPORT_FLOW>>
+- **Response window:** <<SUPPORT_SLA>>
+- **What is included in support:** <<SUPPORT_SCOPE>>
+- **What requires a new project:** <<SUPPORT_OUT_OF_SCOPE>>
+
+## Glossary
+
+A short list of any terms the client will see in the product or in this document, with one-sentence explanations.
+
+| Term                  | Means                                  |
+| --------------------- | -------------------------------------- |
+| <<TERM_1>>            | <<TERM_1_MEANING>>                     |
+
+---
+
+*This document is the **only** project artefact that the client should be expected to read. Everything else — `STATE.md`, `PROJECT_MAP.md`, `DATABASE.md`, etc. — is for the team. Keep this one readable.*
