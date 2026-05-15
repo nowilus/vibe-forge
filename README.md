@@ -1,8 +1,16 @@
 # vibe-forge
 
+<p align="center">
+  <img src="docs/assets/readme/main.png" alt="vibe-forge main icon" width="180">
+</p>
+
 > A starter framework for **vibe-coders** — people who build real software with AI assistants (Cursor, Claude Code, Codex, Lovable, Windsurf, Copilot, …) without necessarily being career engineers.
 >
 > `vibe-forge` does **not** ship a stack. It ships **structure, rules, and a guided interview** that bootstraps a project of any stack into a state where AI agents can work on it safely, documentation stays honest, and the code does not silently rot into the typical vibe-coded mess.
+
+<p align="center">
+  <img src="docs/assets/readme/banner-hero.png" alt="vibe-forge hero banner" width="960">
+</p>
 
 ---
 
@@ -59,6 +67,10 @@ If you are an engineer who already has strong opinions and a tight stack, you ca
 
 ## The 9-step happy path
 
+<p align="center">
+  <img src="docs/assets/readme/guided-interview.png" alt="guided interview illustration" width="420">
+</p>
+
 This is the intended user journey end-to-end:
 
 1. You open this repository on GitHub and read this README.
@@ -106,6 +118,10 @@ git init
 
 ## The `/atomic-prompts` skill — read this
 
+<p align="center">
+  <img src="docs/assets/readme/atomic-prompts.png" alt="atomic prompts illustration" width="420">
+</p>
+
 This is one of the two reasons `vibe-forge` exists (the other being the interview).
 
 **What it does.** You give the AI a sentence like:
@@ -150,6 +166,13 @@ vibe-forge/
 ├── INIT_PROMPT_deep.md              ← guided interview, ~60+ questions
 │
 ├── docs/                            ← framework's own documentation
+│   ├── assets/
+│   │   └── readme/                  ← README artwork and brand illustrations
+│   │       ├── main.png
+│   │       ├── banner-hero.png
+│   │       ├── guided-interview.png
+│   │       ├── atomic-prompts.png
+│   │       └── documentation-discipline.png
 │   ├── HOW_IT_WORKS.md
 │   ├── INTERVIEW_PHILOSOPHY.md
 │   ├── PROMPT_AUTHORING_GUIDE.md
@@ -218,6 +241,10 @@ If your tool is not on this list, the master `PROJECT_RULES.md` is still 95% of 
 ---
 
 ## Documentation philosophy
+
+<p align="center">
+  <img src="docs/assets/readme/documentation-discipline.png" alt="documentation discipline illustration" width="420">
+</p>
 
 `vibe-forge` enforces **six separate documentation files** at the project root, each with one job and one job only:
 
