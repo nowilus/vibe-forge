@@ -51,7 +51,7 @@ All three share the same backbone (path check, language detection, tool detectio
 
 ---
 
-## 4. The five-files-for-five-jobs documentation rule
+## 4. The six-files-for-six-jobs documentation rule
 
 A single `README.md` cannot serve a non-technical client, an LLM rebuilding context, and a developer reviewing history at the same time. So `vibe-forge` splits them:
 
@@ -60,6 +60,7 @@ A single `README.md` cannot serve a non-technical client, an LLM rebuilding cont
 - **`CLIENT_DOCS.md`** — *what the product is, in plain language*. Non-technical. Updated only when product behaviour changes. Always safe to send to the client.
 - **`PROJECT_MAP.md`** — *where things live*. Compact, mechanical, LLM-optimised. Pointers to source-of-truth files. Updated when the map changes (new folder, moved module, etc.).
 - **`RELEASE_NOTES.md`** — *what shipped, by version*. Derived from `CHANGELOG.md` at release boundaries.
+- **`LESSONS.md`** — *what went wrong and how never to repeat it*. Append-only lessons after user corrections or discovered mistakes; skim relevant categories at session start; rules can **graduate** into `CODING_RULES.md`, `DESIGN.md`, etc. when they prove stable.
 
 Each file knows its job. None of them tries to do somebody else's. The agent rule files all reference these by name, which is why renaming them is a bad idea unless you also regenerate the rule files.
 

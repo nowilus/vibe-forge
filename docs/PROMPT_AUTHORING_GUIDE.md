@@ -62,6 +62,7 @@ After the change lands, which of these files must be updated and how:
 - [ ] CLIENT_DOCS.md     (if behaviour visible to client changes)
 - [ ] PROJECT_MAP.md     (if new files / modules were added)
 - [ ] RELEASE_NOTES.md   (if this should appear in the next release)
+- [ ] LESSONS.md         (only if the user corrected the executing agent during this work — append pattern, root cause, preventive rule per `PROJECT_RULES.md` §3.1)
 
 ## 11. Rollback plan
 How to back this change out if something goes wrong. Migrations, feature flags, etc.
@@ -89,7 +90,7 @@ A bad atomic prompt:
 - Reads like a Slack message ("hey can you add google login").
 - Re-explains the whole project in section 2 instead of linking.
 - Skips security and tests.
-- Forgets to mention `STATE.md` / `CHANGELOG.md` updates.
+- Forgets to mention `STATE.md` / `CHANGELOG.md` / `LESSONS.md` (when the user corrected during execution) updates.
 
 The `/atomic-prompts` skill (see `skills/`) is configured to refuse to emit a prompt that violates the bar.
 

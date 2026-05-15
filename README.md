@@ -296,6 +296,7 @@ A. Yes. `PROJECT_RULES.md` is the single source of truth; you (or your AI) can d
   - Agent-config templates for Cursor, Claude Code, Codex, Windsurf, Copilot, Lovable.
   - `/atomic-prompts` skill in Cursor, Claude Code, and Codex flavours.
   - Sentinel-file path check, hybrid interview interaction (askUserQuestion + numbered fallback, option E + `/skip-section`).
+- Docs aligned with `LESSONS.md`: [`docs/FRAMEWORK_CHANGELOG.md`](docs/FRAMEWORK_CHANGELOG.md), [`docs/HOW_IT_WORKS.md`](docs/HOW_IT_WORKS.md), [`docs/PROMPT_AUTHORING_GUIDE.md`](docs/PROMPT_AUTHORING_GUIDE.md).
 
 ---
 
