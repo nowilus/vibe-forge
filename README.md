@@ -1,5 +1,9 @@
 # vibe-forge
 
+**Language / język:** [English](README.md) · [Polski](README.pl.md)
+
+**Note:** GitHub renders `README.md` on the repository home page by default. Use the link above to open the full Polish README (`README.pl.md`).
+
 <p align="center">
   <img src="docs/assets/readme/main.png" alt="vibe-forge main icon" width="180">
 </p>
@@ -157,6 +161,7 @@ The output structure follows the proven format used in real-world atomic prompts
 ```text
 vibe-forge/
 ├── README.md                        ← you are here
+├── README.pl.md                     ← Polish README (full translation)
 ├── .vibe-forge-root                 ← sentinel; INIT_PROMPT refuses to run if missing
 ├── .gitignore                       ← minimal baseline; extended after interview
 ├── .env.example                     ← placeholder; replaced after interview
