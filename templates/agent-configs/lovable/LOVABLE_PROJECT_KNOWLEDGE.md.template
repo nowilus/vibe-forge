@@ -42,8 +42,15 @@ Non-negotiables:
 - Loading / empty / error states on every screen.
 - Schema changes only via migration files.
 - Update STATE.md, CHANGELOG.md (append-only), and CLIENT_DOCS.md (when client-visible) in the same change as the code.
-- Never commit secrets; reference env vars only.
+- NEVER commit secrets or API keys; use env vars only. NEVER hardcode tokens in source.
 - After ANY correction from the user: acknowledge, fix, then append a lesson to LESSONS.md (pattern + root cause + preventive rule) BEFORE continuing. See PROJECT_RULES.md §3.1.
+- Validate all user input at system boundaries. Parameterised queries only — no string-concatenated SQL.
+<<#IF_TDD_BASIC>>
+- Write at least one happy-path test per new function before marking the feature done.
+<</#IF_TDD_BASIC>>
+<<#IF_TDD_FULL>>
+- Full TDD: write failing test first (RED) → implement minimally (GREEN) → refactor. Target coverage ≥ 80%.
+<</#IF_TDD_FULL>>
 
 For `/atomic-prompts <idea>` requests, do NOT implement inline — instead produce `atomic-prompts/NNNN-<slug>.md` using the schema in `docs/PROMPT_AUTHORING_GUIDE.md` (or the locally installed skill file). Print the path and the count of acceptance criteria, then stop.
 

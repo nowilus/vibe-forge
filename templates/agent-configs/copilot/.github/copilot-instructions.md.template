@@ -34,8 +34,15 @@ No new dependencies without explicit approval.
 - Loading / empty / error states on every screen.
 - Schema changes via migration file only.
 - Same-diff updates to `STATE.md`, `CHANGELOG.md` (append), `CLIENT_DOCS.md` (when client-visible).
-- Never commit secrets.
+- Never commit secrets — use `.env` + `process.env` only.
 - After ANY correction from the user: acknowledge, fix, then append a lesson to `LESSONS.md` (pattern + root cause + preventive rule) BEFORE continuing.
+- Validate all user input at system boundaries. Parameterised queries only.
+<<#IF_TDD_BASIC>>
+- Write at least one happy-path test per new function before marking done.
+<</#IF_TDD_BASIC>>
+<<#IF_TDD_FULL>>
+- **Full TDD:** write failing test first (RED) → implement (GREEN) → refactor. Coverage ≥ 80%.
+<</#IF_TDD_FULL>>
 
 ## Must-not-do
 
@@ -43,6 +50,8 @@ No new dependencies without explicit approval.
 - Edit past CHANGELOG entries.
 - Introduce a new framework/library without approval.
 - Touch `templates/` (should be deleted after the interview).
+- Hardcode secrets, API keys, or tokens anywhere in source files.
+- Commit `.env` files (`.env.example` only).
 
 ## When unsure
 

@@ -57,6 +57,32 @@ When the user types `/atomic-prompts <idea>` or asks you to "use the atomic-prom
 3. Print the relative path and the count of acceptance criteria.
 4. Stop. The user will execute the prompt.
 
+## Testing policy
+
+<<#IF_TDD_NONE>>
+Tests not required for this project. Update `CODING_RULES.md` before adding tests later.
+<</#IF_TDD_NONE>>
+<<#IF_TDD_BASIC>>
+Write test stubs alongside new code. Every new function needs at least one happy-path test before the feature is marked done.
+<</#IF_TDD_BASIC>>
+<<#IF_TDD_FULL>>
+**Full TDD enforced.** Failing test first (RED) → minimal implementation (GREEN) → refactor. Coverage ≥ 80% required. Never skip RED.
+<</#IF_TDD_FULL>>
+
+## Security non-negotiables
+
+- NEVER hardcode secrets, API keys, or tokens. Use `.env` + `process.env`.
+- NEVER commit `.env`. Commit `.env.example` only.
+- Validate all user input at system boundaries.
+- Parameterised queries only — no string-concatenated SQL.
+- If a secret lands in source, stop and flag it immediately.
+
+## Skills
+
+- `/atomic-prompts <idea>` → `.cursor/commands/atomic-prompts.md`
+- `/deploy-guide` → `.cursor/commands/deploy-guide.md` — regenerates `DEPLOYMENT.md` using live docs.
+- `/project-health` → `.cursor/commands/project-health.md` — 10-check status dashboard.
+
 ## When in doubt
 
 Ask ONE targeted question with 3-4 candidate answers, then wait. Do not silently choose.

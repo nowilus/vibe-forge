@@ -324,6 +324,56 @@ Gloss: how access is enforced. If unsure, pick the recommended option for your D
 
 ---
 
+### Section 7A — Quality & safety (4 questions)
+
+**Q7A.1 — Testing approach?**
+Gloss: sets up automated test scaffolding and AI coding rules for test discipline.
+
+- A) No tests — skip all test tooling for now.
+- B) Basic tests — auto-generate test stubs alongside code; no strict TDD.
+- C) Full TDD — AI writes tests first (RED → GREEN → refactor). 80% coverage enforced.
+- D) Let the model decide (default B).
+
+Downstream: A → `<<TDD_TIER>>=none`; B → `<<TDD_TIER>>=basic`; C → `<<TDD_TIER>>=full`.
+
+**Q7A.2 — Security & quality hooks scope?**
+Gloss: invisible guard-rails running automatically on every AI code edit — secret scanner, TS type checker, console.log warning, doc-sync reminder, auto-formatter.
+
+- A) Project-local only — `.claude/hooks/`.
+- B) Global — all my Claude Code projects (`~/.claude/hooks/`).
+- C) Both — local now + global install instructions printed.
+- D) Skip — manage hooks manually.
+- E) Let the model decide (default A).
+
+Downstream: A or C → copy `templates/hooks/claude-code/` to `.claude/hooks/`; B or C → also print global install command; D → skip.
+
+**Q7A.3 — Design uniqueness guard?**
+Gloss: optional hook that warns when generic Bootstrap-style class patterns appear in UI files — keeps the brand visually distinctive.
+
+- A) Yes — enable design quality guard.
+- B) No — skip.
+- C) Let the model decide (default A if UI framework selected, B otherwise).
+
+Downstream: A → add `design-quality-check` hook entry to `hooks.json`; fills `<<DESIGN_GUARD>>=true`.
+
+**Q7A.4 — Deployment platform for deployment guide?**
+Gloss: generates a step-by-step `DEPLOYMENT.md` tailored to your platform; always refreshable via `/deploy-guide` skill.
+
+- A) Vercel
+- B) Netlify
+- C) Railway
+- D) Cloudflare Pages / Workers
+- E) AWS (describe which services)
+- F) GCP (describe)
+- G) Azure (describe)
+- H) Self-host — Docker / VPS
+- I) Same as Q3.6 hosting answer.
+- J) Let the model decide (default I).
+
+Downstream: fills `<<DEPLOY_PLATFORM>>` → used in `DEPLOYMENT.md` and `/deploy-guide` skill.
+
+---
+
 ### Section 8 — Documentation policy (3 questions)
 
 **Q8.1 — Markdown documentation language?**
@@ -407,6 +457,8 @@ After Q10.2, do the following — **in this order**:
    - Extend `.gitignore` with stack-specific entries (`node_modules/`, `.next/`, `dist/`, `.venv/`, `*.log`, OS files, etc.).
    - Copy the selected `/atomic-prompts` skill variant(s) into the project (e.g. `.cursor/commands/atomic-prompts.md`, `.claude/skills/atomic-prompts/SKILL.md`, `.codex/skills/atomic-prompts/SKILL.md`). Skill source files live in `skills/` of the framework.
    - Create the empty `atomic-prompts/` directory with a `.gitkeep` and a one-paragraph `README.md` explaining its purpose.
+   - **Hooks (Q7A.2):** If A or C — copy `templates/hooks/scripts/*.sh` (Unix) or `templates/hooks/scripts/*.ps1` (Windows) to `.claude/hooks/`; copy `templates/hooks/claude-code/hooks.json.template` → `.claude/hooks.json` (add `design-quality-check` entry if Q7A.3 = A). If B or C — print global install instructions: `cp .claude/hooks/* ~/.claude/hooks/` and merge `hooks.json` entries.
+   - **Skills (Q7A.4 + Claude Code):** If Claude Code selected — copy `skills/claude-code/.claude/skills/deploy-guide/` and `skills/claude-code/.claude/skills/project-health/` into `.claude/skills/`. If Cursor — copy `skills/cursor/.cursor/commands/deploy-guide.md` and `project-health.md`. If Codex — copy `skills/codex/.codex/skills/deploy-guide/` and `project-health/`.
    - Perform Q10.1 cleanup (delete or archive `templates/`, `INIT_PROMPT_*.md`, `.vibe-forge-root`, optionally `docs/`).
    - Perform Q10.2 git action.
    - Print the **post-interview cleanup checklist** (see Section 12).
@@ -428,6 +480,9 @@ Setup complete. Verify the following before your first feature prompt:
 [ ] atomic-prompts/ folder exists (empty) and /atomic-prompts skill is installed for at least one of your tools.
 [ ] templates/, INIT_PROMPT_*.md, and .vibe-forge-root have been removed (or archived under .vibe-forge/used/).
 [ ] git history reflects what you wanted (fresh init, or kept).
+[ ] .claude/hooks/ scripts exist and are executable (run: chmod +x .claude/hooks/*.sh on Unix).
+[ ] /deploy-guide skill installed (Claude Code: .claude/skills/deploy-guide/SKILL.md | Cursor: .cursor/commands/deploy-guide.md | Codex: .codex/skills/deploy-guide/SKILL.md).
+[ ] /project-health skill installed (same paths as above, project-health variant).
 
 If anything is off, tell me which item and I will fix it before you continue.
 ```

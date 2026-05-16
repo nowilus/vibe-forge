@@ -53,6 +53,21 @@ Free-text ("minimal, modern, dark with bright accents" / "fun and colourful" / �
 - C) Sensitive PII / regulated industry — describe.
 - D) Let the model decide (default B).
 
+### Q7A — Testing approach?
+- A) No tests.
+- B) Basic test stubs (default).
+- C) Full TDD — AI writes tests first, 80% coverage enforced.
+- D) Let the model decide (default B).
+
+### Q7B — Deployment platform?
+Gloss: generates `DEPLOYMENT.md`; refreshable via `/deploy-guide`.
+- A) Vercel (default if Q5 = Vercel).
+- B) Netlify.
+- C) Railway.
+- D) Self-host / other — describe.
+- E) Same as hosting answer.
+- F) Let the model decide (default E).
+
 ### Q8 — Documentation language?
 - A) English.
 - B) Polish.
@@ -95,6 +110,9 @@ Because we skipped sections (multi-tenancy, auth specifics, deployment specifics
 - Code-comment language: English.
 - Markdown docs language: from Q8.
 - Generate handover walkthrough: yes.
+- TDD tier: basic (from Q7A default B). 🤖
+- Hooks scope: project-local (`.claude/hooks/`). 🤖
+- Design uniqueness guard: enabled if UI framework detected. 🤖
 
 These defaults must be enumerated in the final summary table so the user can spot anything they want to change before generation.
 

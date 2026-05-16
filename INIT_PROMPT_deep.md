@@ -98,6 +98,16 @@ For brevity, the standard set is referenced by ID and only the **extra** deep qu
 - **Q7.10** — incident channel (none / email / Slack / PagerDuty).
 - **Q7.11** — on-call schedule (none / informal / rota).
 
+### Section 7A — Quality & safety
+
+- **Q7A.1** — testing approach (none / basic stubs / full TDD with 80% coverage enforcement). Downstream: fills `<<TDD_TIER>>`.
+- **Q7A.2** — hooks scope (project-local / global / both / skip). Installs secret scanner, TS type checker, console.log warning, doc-sync reminder, auto-formatter, design guard.
+- **Q7A.3** — design uniqueness guard (yes / no). Warns on generic Bootstrap-style class patterns in UI files.
+- **Q7A.4** — deployment platform (Vercel / Netlify / Railway / Cloudflare / AWS / GCP / Azure / self-host / same as Q3.6). Generates live-researched `DEPLOYMENT.md`; refreshable via `/deploy-guide`.
+- **Q7A.5** (deep only) — coverage enforcement mechanism (CI gate / pre-commit hook / advisory only / none).
+- **Q7A.6** (deep only) — secret scanning scope (staged files only / full repo scan / CI + local).
+- **Q7A.7** (deep only) — auto-format tool preference (biome / prettier / none — let model decide).
+
 ### Section 8 — Documentation policy
 
 - **Q8.1**–**Q8.3** standard.
