@@ -62,6 +62,41 @@ If the user asks for an atomic prompt (via `/atomic-prompts` or by naming the sk
 - Editing CHANGELOG.md retroactively.
 - Writing to `templates/` (should not exist post-interview).
 
+## Testing policy
+
+<<#IF_TDD_NONE>>
+Tests not required for this project. If adding tests later, update `CODING_RULES.md` first.
+<</#IF_TDD_NONE>>
+<<#IF_TDD_BASIC>>
+Write test stubs alongside new code. Every new function should have at least one happy-path test before the feature is marked done.
+<</#IF_TDD_BASIC>>
+<<#IF_TDD_FULL>>
+**Full TDD enforced.** Write the failing test first (RED). Run it — must fail. Implement minimally (GREEN). Refactor. Coverage ≥ 80% before marking done. Never skip the RED step.
+<</#IF_TDD_FULL>>
+
+## Security non-negotiables
+
+- NEVER hardcode secrets, API keys, or tokens. Use `.env` + `process.env`.
+- NEVER commit `.env`. Commit `.env.example` only.
+- Validate all user input at system boundaries. Never trust external data.
+- Parameterised queries only — never string-concatenate SQL.
+- If a secret lands in source, stop immediately and flag it.
+
+## Hooks (automatic guard-rails)
+
+`.claude/hooks/` runs automatically on every edit:
+- **PreToolUse**: secret scanner + config-file protection.
+- **PostToolUse**: TypeScript type check + console.log warning + doc-sync reminder.
+- **Stop**: auto-formatter (Biome → Prettier fallback) + final TS check.
+
+Do not disable hooks without explicit user instruction.
+
+## Skills
+
+- `/atomic-prompts <idea>` → `.claude/skills/atomic-prompts/SKILL.md`
+- `/deploy-guide` → `.claude/skills/deploy-guide/SKILL.md` — regenerates `DEPLOYMENT.md` using live docs.
+- `/project-health` → `.claude/skills/project-health/SKILL.md` — 10-check status dashboard.
+
 ## When unsure
 
 One question. 3-4 candidate answers. Wait.

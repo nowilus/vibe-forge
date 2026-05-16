@@ -1,0 +1,30 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {"type": "command", "command": "sh .claude/hooks/secret-scanner.sh"},
+          {"type": "command", "command": "sh .claude/hooks/config-protection.sh"}
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {"type": "command", "command": "sh .claude/hooks/quality-gate.sh"},
+          {"type": "command", "command": "sh .claude/hooks/console-log-warn.sh"},
+          {"type": "command", "command": "sh .claude/hooks/doc-sync-reminder.sh"}
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {"type": "command", "command": "sh .claude/hooks/auto-format.sh"}
+        ]
+      }
+    ]
+  }
+}

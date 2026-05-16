@@ -50,6 +50,32 @@ If invoked, generate `atomic-prompts/NNNN-<slug>.md` via `.codex/skills/atomic-p
 - Editing past CHANGELOG entries.
 - Writing to `templates/`.
 
+## Testing policy
+
+<<#IF_TDD_NONE>>
+Tests not required for this project.
+<</#IF_TDD_NONE>>
+<<#IF_TDD_BASIC>>
+Write test stubs alongside new code. Every new function needs at least one happy-path test before marking done.
+<</#IF_TDD_BASIC>>
+<<#IF_TDD_FULL>>
+**Full TDD enforced.** Failing test first (RED) → minimal implementation (GREEN) → refactor. Coverage ≥ 80%. Never skip RED.
+<</#IF_TDD_FULL>>
+
+## Security non-negotiables
+
+- NEVER hardcode secrets, API keys, or tokens. Use `.env` + `process.env`.
+- NEVER commit `.env`. Commit `.env.example` only.
+- Validate all user input at system boundaries.
+- Parameterised queries only — no string-concatenated SQL.
+- If a secret lands in source, stop and flag it immediately.
+
+## Skills
+
+- `/atomic-prompts <idea>` → `.codex/skills/atomic-prompts/SKILL.md`
+- `/deploy-guide` → `.codex/skills/deploy-guide/SKILL.md` — regenerates `DEPLOYMENT.md` using live docs.
+- `/project-health` → `.codex/skills/project-health/SKILL.md` — 10-check status dashboard.
+
 ## When unsure
 
 ASK. One question, 3-4 options, wait.
