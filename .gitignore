@@ -29,3 +29,6 @@ Thumbs.db
 
 # Framework maintainer — local LLM session map (see repo README “Repository layout” to recreate)
 FRAMEWORK_MAP.local.md
+
+# icons
+vibe-forge-icons/
