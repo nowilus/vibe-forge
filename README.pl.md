@@ -26,13 +26,14 @@ Na stronie głównej repozytorium GitHub domyślnie wyświetla `README.md`. Peł
 4. [Szybki start](#szybki-start)
 5. [Atomic prompts](#atomic-prompts)
 6. [Wbudowana sieć bezpieczeństwa](#wbudowana-sieć-bezpieczeństwa--inżynierskie-zabezpieczenia-niewidoczne-dla-ciebie)
-7. [Układ repozytorium](#układ-repozytorium)
-8. [Obsługiwani agenci AI](#obsługiwani-agenci-ai)
-9. [Filozofia dokumentacji](#filozofia-dokumentacji)
-10. [Lista kontrolna po zakończeniu wywiadu](#lista-kontrolna-po-zakończeniu-wywiadu)
-11. [Często zadawane pytania](#często-zadawane-pytania)
-12. [Dziennik zmian frameworku](#dziennik-zmian-frameworku)
-13. [Licencja](#licencja)
+7. [Lokalny dashboard (`vibe-forge-ui`)](#lokalny-dashboard-vibe-forge-ui)
+8. [Układ repozytorium](#układ-repozytorium)
+9. [Obsługiwani agenci AI](#obsługiwani-agenci-ai)
+10. [Filozofia dokumentacji](#filozofia-dokumentacji)
+11. [Lista kontrolna po zakończeniu wywiadu](#lista-kontrolna-po-zakończeniu-wywiadu)
+12. [Często zadawane pytania](#często-zadawane-pytania)
+13. [Dziennik zmian frameworku](#dziennik-zmian-frameworku)
+14. [Licencja](#licencja)
 
 ---
 
@@ -243,6 +244,44 @@ Dostępne dla Claude Code, Cursor i Codex. Zero konfiguracji — działa na loka
 
 ---
 
+## Lokalny dashboard (`vibe-forge-ui`)
+
+`vibe-forge` zawiera opcjonalny **lokalny dashboard** — aplikację webową opartą na Fastify + React, która mieszka w katalogu `gui/`. Daje Ci wizualny, przeglądarkowy widok projektu bez wychodzenia z terminala.
+
+### Co obejmuje (v0.5)
+
+| Ekran | Ścieżka | Co widać |
+|-------|---------|---------|
+| **Home** | `/` | Nazwa projektu, stos, poziom TDD, siatka świeżości dokumentów z zlokalizowanymi odznaczkami wiekowych, ostatnie wpisy changelogu, najnowsze lekcje |
+| **Docs** | `/docs` | Wszystkie pliki `.md` projektu, przeglądane i renderowane |
+| **Health** | `/health` | Karta wynikowa 10 kontroli; opatrzony adnotacjami wykres SVG historii z kolorowymi strefami progowymi, etykietami osi Y/X, wartościami score na każdym punkcie; zwijana lista wywołań; szczegóły każdej kontroli; przycisk ponownego uruchomienia |
+| **Prompts** | `/prompts` | Wszystkie pliki `atomic-prompts/` jako karty; filtrowanie po statusie; tworzenie nowych promptów z formularza |
+| **Hooks Monitor** | `/hooks` | Skonfigurowane hooki, ich komendy i na żywo feed zdarzeń z `.vibe-forge/hook-events.json` |
+
+### Jak uruchomić
+
+```bash
+cd gui
+npm install        # tylko za pierwszym razem
+npm run dev        # uruchamia serwer (port 7432) i klienta (port 5173)
+```
+
+Otwórz `http://localhost:5173` w przeglądarce. API Fastify działa pod `http://localhost:7432/api/*`.
+
+> **Uwaga:** Dashboard czyta **katalog nadrzędny** do `gui/` jako root projektu — pokazuje Twoje faktyczne pliki projektu, a nie pliki źródłowe gui.
+
+### Build produkcyjny
+
+```bash
+cd gui
+npm run build      # buduje klienta React do gui/dist/
+npm run start      # serwuje zbudowanego klienta statycznie z Fastify
+```
+
+Serwer produkcyjny działa w całości na porcie 7432 bez osobnego procesu Vite.
+
+---
+
 ## Układ repozytorium
 
 ```text
@@ -252,6 +291,19 @@ vibe-forge/
 ├── .vibe-forge-root                 ← plik sygnalizacyjny; INIT_PROMPT nie uruchomi się bez niego
 ├── .gitignore                       ← minimalna baza; rozszerzana po wywiadzie
 ├── .env.example                     ← placeholder; zastępowany po wywiadzie
+│
+├── gui/                             ← opcjonalny lokalny dashboard (Fastify + React)
+│   ├── README.md                    ← dokumentacja deweloperska dashboardu
+│   ├── package.json
+│   ├── server/                      ← API Fastify (port 7432)
+│   │   ├── index.ts
+│   │   ├── routes/                  ← health, prompts, hooks, docs, project
+│   │   ├── checks/                  ← 10 modułów health-check
+│   │   └── utils/
+│   └── client/                      ← React 18 + Vite + Tailwind SPA
+│       └── src/
+│           ├── pages/               ← Home, Docs, Health, Prompts, Hooks
+│           └── components/
 │
 ├── INIT_PROMPT_short.md             ← wywiad, ~10 pytań
 ├── INIT_PROMPT_standard.md          ← wywiad, ~30 pytań (zalecane)
@@ -437,6 +489,20 @@ Ostatnia wiadomość każdego pliku `INIT_PROMPT_*.md` kończy się tą listą. 
 ---
 
 ## Dziennik zmian frameworku
+
+### v1.3
+
+- **Ekran Health — opatrzony adnotacjami wykres historii wyników SVG:** Zastąpiono prosty wykres sparkline w pełni opatrzonym adnotacjami wykresem pokazującym strefy progowe (zielona ≥80, bursztynowa ≥50, czerwona <50), etykiety osi Y (0/50/80/100), znaczniki numerów przebiegów na osi X z zabezpieczeniem przed nakładaniem, etykiety wyników na każdym punkcie danych z białą aureolą dla czytelności oraz zwijaną listą przebiegów (data, godzina, wynik) pod wykresem. Wykres renderuje się od pierwszego przebiegu.
+- **Ekran Home — zlokalizowane odznaki świeżości dokumentów:** Etykiety odznak używają teraz kluczy i18n (`badgeMissing`, `badgeToday`, `badgeDaysAgo(n)`) zamiast surowych ciągów z API. Stack i poziom TDD wyświetlają przetłumaczoną etykietę "nieznany" gdy wartość jest nieobecna.
+- **Rozszerzenia i18n (EN + PL):** Klucze `historyExplain`, `badgeMissing`, `badgeToday`, `badgeDaysAgo`, `unknown` dodane do obu plików lokalizacji.
+
+### v1.2
+
+- **Lokalny dashboard (`vibe-forge-ui`):** Aplikacja webowa Fastify + React w katalogu `gui/` z pięcioma ekranami — Home, Docs, Health, Prompts, Hooks Monitor.
+  - Ekran Health uruchamia wszystkie 10 kontroli na żądanie, pokazuje kartę wynikową i wykres historii z 90 wpisami.
+  - Ekran Prompts listuje i tworzy pliki `atomic-prompts/` z filtrowaniem po statusie.
+  - Hooks Monitor pokazuje skonfigurowane hooki Claude Code i przesyła strumieniowo ostatnie zdarzenia hooków.
+  - Uruchamia się przez `cd gui && npm run dev`; build produkcyjny serwowany przez `npm run start`.
 
 ### v1.1
 

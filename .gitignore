@@ -32,3 +32,8 @@ FRAMEWORK_MAP.local.md
 
 # icons
 vibe-forge-icons/
+
+# GUI internal planning / design docs (not for public consumption)
+GUI_PLAN.md
+.claude/DESIGN.md
+.claude/PRODUCT.md

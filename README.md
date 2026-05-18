@@ -26,13 +26,14 @@
 4. [Quick start](#quick-start)
 5. [The `/atomic-prompts` skill](#the-atomic-prompts-skill--read-this)
 6. [Built-in safety net](#built-in-safety-net--engineering-guardrails-invisible-to-you)
-7. [Repository layout](#repository-layout)
-8. [Supported AI agents](#supported-ai-agents)
-9. [Documentation philosophy](#documentation-philosophy)
-10. [Post-interview cleanup checklist](#post-interview-cleanup-checklist)
-11. [FAQ](#faq)
-12. [Framework changelog](#framework-changelog)
-13. [License](#license)
+7. [Local dashboard (`vibe-forge-ui`)](#local-dashboard-vibe-forge-ui)
+8. [Repository layout](#repository-layout)
+9. [Supported AI agents](#supported-ai-agents)
+10. [Documentation philosophy](#documentation-philosophy)
+11. [Post-interview cleanup checklist](#post-interview-cleanup-checklist)
+12. [FAQ](#faq)
+13. [Framework changelog](#framework-changelog)
+14. [License](#license)
 
 ---
 
@@ -243,6 +244,44 @@ Available for Claude Code, Cursor, and Codex. Zero setup — runs against your l
 
 ---
 
+## Local dashboard (`vibe-forge-ui`)
+
+`vibe-forge` ships an optional **local web dashboard** — a Fastify + React single-page application that lives in the `gui/` directory. It gives you a visual, browser-based view of your project without leaving the terminal.
+
+### What it covers (v0.5)
+
+| Screen | Route | What you see |
+|--------|-------|-------------|
+| **Home** | `/` | Project name, stack, TDD tier, doc freshness grid with localized age badges, recent changelog entries, latest lessons |
+| **Docs** | `/docs` | All `.md` files in the project, rendered and browsable |
+| **Health** | `/health` | 10-check score card; annotated SVG history chart with threshold zones, Y/X axis labels, score labels on every point; collapsible run list; per-check details; re-run button |
+| **Prompts** | `/prompts` | All `atomic-prompts/` files as cards; filter by status; create new prompts from a form |
+| **Hooks Monitor** | `/hooks` | Which hooks are configured, their commands, and a live event feed from `.vibe-forge/hook-events.json` |
+
+### How to run
+
+```bash
+cd gui
+npm install        # first time only
+npm run dev        # starts both server (port 7432) and client (port 5173)
+```
+
+Open `http://localhost:5173` in your browser. The Fastify API runs at `http://localhost:7432/api/*`.
+
+> **Note:** The dashboard reads the **parent directory** of `gui/` as the project root, so it reflects your actual project files — not the gui's own source.
+
+### Build for production
+
+```bash
+cd gui
+npm run build      # builds the React client into gui/dist/
+npm run start      # serves the built client statically from Fastify
+```
+
+The production server runs entirely on port 7432 with no separate Vite process.
+
+---
+
 ## Repository layout
 
 ```text
@@ -252,6 +291,19 @@ vibe-forge/
 ├── .vibe-forge-root                 ← sentinel; INIT_PROMPT refuses to run if missing
 ├── .gitignore                       ← minimal baseline; extended after interview
 ├── .env.example                     ← placeholder; replaced after interview
+│
+├── gui/                             ← optional local dashboard (Fastify + React)
+│   ├── README.md                    ← dashboard developer docs
+│   ├── package.json
+│   ├── server/                      ← Fastify API (port 7432)
+│   │   ├── index.ts
+│   │   ├── routes/                  ← health, prompts, hooks, docs, project
+│   │   ├── checks/                  ← 10 health-check modules
+│   │   └── utils/
+│   └── client/                      ← React 18 + Vite + Tailwind SPA
+│       └── src/
+│           ├── pages/               ← Home, Docs, Health, Prompts, Hooks
+│           └── components/
 │
 ├── INIT_PROMPT_short.md             ← guided interview, ~10 questions
 ├── INIT_PROMPT_standard.md          ← guided interview, ~30 questions (recommended)
@@ -432,6 +484,20 @@ A. Yes — edit `PROJECT_RULES.md` and regenerate the agent configs (any AI can 
 ---
 
 ## Framework changelog
+
+### v1.3
+
+- **Health screen — annotated SVG score history chart:** Replaced the bare sparkline with a fully annotated chart showing threshold zones (green ≥80, amber ≥50, red <50), Y-axis labels (0/50/80/100), X-axis run-number ticks with crowding guard, score labels on every data point with white halo for readability, and a collapsible run list (date, time, score) below the chart. Chart renders from the first run.
+- **Home screen — localized doc-freshness badges:** Badge labels now use i18n keys (`badgeMissing`, `badgeToday`, `badgeDaysAgo(n)`) instead of raw API strings. Stack and TDD tier display "unknown" translated label when value is absent.
+- **i18n additions (EN + PL):** `historyExplain`, `badgeMissing`, `badgeToday`, `badgeDaysAgo`, `unknown` keys added to both locale files.
+
+### v1.2
+
+- **Local dashboard (`vibe-forge-ui`):** Fastify + React web app in `gui/` with five screens — Home, Docs, Health, Prompts, Hooks Monitor.
+  - Health screen runs all 10 checks on demand, shows a score card and a 90-entry history sparkline.
+  - Prompts screen lists and creates `atomic-prompts/` files with status filtering.
+  - Hooks Monitor shows which Claude Code hooks are configured and streams recent hook events.
+  - Runs with `cd gui && npm run dev`; production build served from `npm run start`.
 
 ### v1.1
 
