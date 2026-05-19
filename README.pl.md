@@ -114,6 +114,7 @@ git init
 #    - INIT_PROMPT_short.md      (~10 pytań, najszybciej, głównie domyślne ustawienia modelu)
 #    - INIT_PROMPT_standard.md   (~30 pytań, zalecane dla większości projektów)
 #    - INIT_PROMPT_deep.md       (60+ pytań, wywiad w stylu audytowym)
+#    - INIT_PROMPT_import.md     (masz już dokumenty? pomiń wizard — patrz niżej)
 
 # 4. Odpowiadaj na pytania. Używaj opcji E albo /skip-section, gdy
 #    nie znasz odpowiedzi albo nie masz preferencji.
@@ -123,6 +124,27 @@ git init
 ```
 
 > **Wskazówka:** Uruchom wywiad w *świeżej* sesji czatu swojego narzędzia AI, ze sklonowanym folderem jako katalogiem głównym workspace'u. Nie wklejaj promptu w długą, niepowiązaną rozmowę — opiera się na czystym kontekście.
+
+### Masz już dokumenty? Użyj trybu importu
+
+Jeśli posiadasz istniejące dokumenty projektowe — PRODUCT.md, DESIGN.md, plan architektury, makiety PNG lub dowolną kombinację — możesz całkowicie pominąć wizard pytanie po pytaniu.
+
+**Jak to działa:**
+
+1. Utwórz folder `import/` w katalogu głównym repozytorium.
+2. Wrzuć swoje pliki (`.md`, `.txt`, `.pdf`, `.png`, `.jpg`, `.webp`, pliki kodu, wyeksportowane foldery projektów — cokolwiek).
+3. Wklej `INIT_PROMPT_import.md` do narzędzia AI.
+
+AI wykona:
+- Inwentaryzację każdego wrzuconego pliku
+- Wyodrębnienie wszystkich ~120 wartości placeholder z Twoich treści (z oceną pewności: HIGH / MEDIUM / LOW)
+- Wyświetlenie raportu ekstrakcji — co znaleziono, co wywnioskowano, czego brakuje
+- Zadanie ukierunkowanych pytań uzupełniających *tylko* dla brakujących lub niejednoznacznych elementów
+- Wygenerowanie tego samego kompletnego zestawu plików projektu co standardowy wizard
+
+> **Obsługiwane narzędzia AI dla trybu importu:** Każdy model obsługujący wizję przetwarza makiety PNG (Claude, GPT-4o). Modele tylko-tekstowe pomijają obrazy i zadają więcej pytań. Wszystkie narzędzia obsługują pliki `.md`, `.txt` i kodu.
+
+Szczegóły znajdziesz w `import/README.md` wewnątrz folderu.
 
 ---
 
@@ -489,6 +511,17 @@ Ostatnia wiadomość każdego pliku `INIT_PROMPT_*.md` kończy się tą listą. 
 ---
 
 ## Dziennik zmian frameworku
+
+### v1.4
+
+- **Tryb importu (`INIT_PROMPT_import.md`):** Nowy, alternatywny przepływ wywiadu. Wrzuć istniejące dokumenty (`.md`, `.txt`, `.pdf`, makiety `.png`, eksporty kodu) do folderu `import/`, a AI automatycznie wyodrębni wszystkie ~120 wartości placeholder. Pytania uzupełniające zadawane tylko dla brakujących lub niejednoznacznych elementów. Wynik identyczny ze standardowym wizardem.
+- **`import/README.md`:** Krótki przewodnik wyjaśniający obsługiwane typy plików i sposób użycia trybu importu.
+- **Wbudowana mapa ekstrakcji placeholder:** Pełna mapa wbudowana w `INIT_PROMPT_import.md` — obejmuje wszystkie placeholder w sześciu szablonach reguł projektowych i siedmiu szablonach dokumentów, z regułami pewności (HIGH / MEDIUM / LOW) i wzorcami wyszukiwania.
+- **Wykrywanie konfliktów:** Gdy dwa pliki źródłowe zawierają sprzeczne informacje, tryb importu jawnie oznacza konflikt i prosi użytkownika o jednorazowe rozstrzygnięcie — nigdy nie wybiera cicho jednej strony.
+- **Obsługa wizji:** Pliki `.png` / `.jpg` / `.webp` analizowane pod kątem dominujących kolorów (`<<BRAND_PRIMARY>>`), typografii (`<<FONT_PRIMARY>>`), i wzorców układu. Pewność zawsze MEDIUM lub LOW dla ekstrakcji wizualnej.
+- **Odsyłacze:** Dodano wzmiankę w sekcji 0 plików `INIT_PROMPT_short/standard/deep.md` — „Masz już dokumenty? Zobacz `INIT_PROMPT_import.md`".
+- **`import/` dodany do `.gitignore`**.
+- **Ekran Konfiguracja w dashboardzie GUI:** Nowy ekran Setup (`/setup`) w `vibe-forge-ui` z dwoma trybami: wizard krok po kroku oraz panel importu, który czyta folder `import/` i wyodrębnia odpowiedzi przez API (`GET /api/import/status`, `POST /api/import/extract`).
 
 ### v1.3
 
