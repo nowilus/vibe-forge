@@ -507,6 +507,17 @@ A. Yes — edit `PROJECT_RULES.md` and regenerate the agent configs (any AI can 
 
 ## Framework changelog
 
+### v1.4
+
+- **Import Mode (`INIT_PROMPT_import.md`):** New alternative interview flow. Drop existing documents (`.md`, `.txt`, `.pdf`, `.png` mockups, code exports) into an `import/` folder and the AI extracts all ~120 placeholder values automatically. Gap-fill questions asked only for missing or ambiguous items. Output identical to the standard wizard.
+- **`import/README.md`:** Short guide explaining supported file types and how to use Import Mode.
+- **Embedded placeholder extraction map:** Full map embedded in `INIT_PROMPT_import.md` — covers all placeholders across the six project-rule templates and seven project-doc templates, with confidence rules (HIGH / MEDIUM / LOW) and search patterns per placeholder.
+- **Conflict detection:** When two source files contain contradictory information, Import Mode explicitly flags the conflict and asks the user to resolve it once — never silently picks a side.
+- **Vision support:** `.png` / `.jpg` / `.webp` files analysed for dominant colours (`<<BRAND_PRIMARY>>`), typography (`<<FONT_PRIMARY>>`), and layout patterns. Confidence always MEDIUM or LOW for visual extraction.
+- **Cross-references:** One-line mention added to Section 0 of `INIT_PROMPT_short/standard/deep.md` — "Already have docs? See `INIT_PROMPT_import.md`".
+- **`import/` added to `.gitignore`.**
+- **Setup screen in GUI dashboard:** New Setup screen (`/setup`) in `vibe-forge-ui` with two modes: step-by-step wizard and an import panel that reads the `import/` folder and extracts answers via API (`GET /api/import/status`, `POST /api/import/extract`).
+
 ### v1.3
 
 - **Health screen — annotated SVG score history chart:** Replaced the bare sparkline with a fully annotated chart showing threshold zones (green ≥80, amber ≥50, red <50), Y-axis labels (0/50/80/100), X-axis run-number ticks with crowding guard, score labels on every data point with white halo for readability, and a collapsible run list (date, time, score) below the chart. Chart renders from the first run.
