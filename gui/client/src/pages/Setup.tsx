@@ -554,7 +554,7 @@ function StepPreview({
           <p className="text-sm text-vf-muted">
             {t.setup.preview.filesCount(files.length)}
           </p>
-          <div className="flex flex-col gap-2 max-h-[320px] overflow-y-auto pr-1">
+          <div className="flex flex-col gap-2">
             {files.map((f) => (
               <FilePreviewItem key={f.path} file={f} />
             ))}

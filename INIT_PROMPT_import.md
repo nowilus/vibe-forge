@@ -255,11 +255,16 @@ Wait for user confirmation before continuing.
 
 Ask only about **missing** and **user-rejected-inferred** placeholders. Group by topic. One question per turn.
 
+> **AI tools (Q1.1) is ALWAYS asked first — never skipped, never defaulted, even if extracted.**
+> Reason: agent-config files (CLAUDE.md, .cursorrules, AGENTS.md, etc.) are only generated for explicitly confirmed tools.
+> Even if you extracted "cursor" from the user's docs with HIGH confidence, confirm it before generation.
+> Ask Q1.1 as the very first gap-fill question regardless of extraction results.
+
 For each gap-fill question, use the **exact option sets from `INIT_PROMPT_standard.md`** — map question IDs to standard wizard equivalents below:
 
 | Gap area | Standard question to reuse |
 |----------|---------------------------|
-| AI tools | Q1.1 |
+| AI tools | Q1.1 — **MANDATORY FIRST, always asked** |
 | Hooks scope | Q7A.2 |
 | Product type | Q2.4 |
 | Stack (full preset) | Q3.1–Q3.6 (only for missing stack items) |
