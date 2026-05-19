@@ -51,6 +51,30 @@ All three share the same backbone (path check, language detection, tool detectio
 
 ---
 
+## 3b. Import Mode — when you already have docs
+
+Some vibe-coders prepare project knowledge before reaching `vibe-forge`. They write a PRODUCT.md in a free-tier LLM, export a DESIGN.md from Claude Design, sketch wireframes in Figma, or drop a full architecture plan into a text file. Re-answering 30 interview questions when you already have all that content is friction — not value.
+
+Import Mode eliminates it. Instead of interviewing you from scratch, `INIT_PROMPT_import.md`:
+
+1. **Inventories** every file you drop into an `import/` folder (`.md`, `.txt`, `.pdf`, `.png`, code files).
+2. **Extracts** all ~120 placeholder values from your content, rating each finding HIGH / MEDIUM / LOW confidence.
+3. **Reports** what was found, what was inferred, and what is genuinely missing.
+4. **Gap-fills** only what is missing — reusing the exact same question option sets as the standard wizard.
+5. **Generates** the same complete project file set as any other INIT_PROMPT variant.
+
+The output is identical to the wizard. The difference is how the AI gets there: reading your files first, asking questions second.
+
+**Design principles:**
+
+- Non-destructive: zero changes to `INIT_PROMPT_short/standard/deep.md`.
+- No runtime: runs entirely inside your AI tool — no CLI, no Node.js.
+- Same cleanup: `import/` is removed in the post-generation step alongside `templates/`.
+
+**When to use the wizard instead:** If your source docs are sparse (one file, mostly headings, very little content), the wizard will produce better results. Import Mode is designed for real, substantive docs — not stubs.
+
+---
+
 ## 4. The six-files-for-six-jobs documentation rule
 
 A single `README.md` cannot serve a non-technical client, an LLM rebuilding context, and a developer reviewing history at the same time. So `vibe-forge` splits them:

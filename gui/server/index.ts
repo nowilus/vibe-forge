@@ -9,6 +9,7 @@ import { healthRoutes } from "./routes/health.js";
 import { promptsRoutes } from "./routes/prompts.js";
 import { hooksRoutes } from "./routes/hooks.js";
 import { setupRoutes } from "./routes/setup.js";
+import { importRoutes } from "./routes/import.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -27,6 +28,7 @@ await app.register(healthRoutes, { prefix: "/api" });
 await app.register(promptsRoutes, { prefix: "/api" });
 await app.register(hooksRoutes, { prefix: "/api" });
 await app.register(setupRoutes, { prefix: "/api" });
+await app.register(importRoutes, { prefix: "/api" });
 
 const clientDist = path.resolve(__dirname, "../client/dist");
 try {

@@ -114,6 +114,7 @@ git init
 #    - INIT_PROMPT_short.md      (~10 questions, fastest, mostly LLM defaults)
 #    - INIT_PROMPT_standard.md   (~30 questions, recommended for most projects)
 #    - INIT_PROMPT_deep.md       (~60+ questions, full audit-grade interview)
+#    - INIT_PROMPT_import.md     (already have docs? skip the wizard — see below)
 
 # 4. Answer the questions. Use option E or /skip-section whenever you
 #    do not know or do not care.
@@ -123,6 +124,27 @@ git init
 ```
 
 > **Tip:** Run the interview in a *fresh* chat session of your AI tool, with the cloned folder as the workspace root. Do not paste the prompt into a long, unrelated conversation — it relies on a clean context.
+
+### Already have docs? Use Import Mode
+
+If you have existing project documents — a PRODUCT.md, DESIGN.md, architecture plan, wireframe PNGs, or any combination — you can skip the question-by-question wizard entirely.
+
+**How it works:**
+
+1. Create an `import/` folder at the repo root.
+2. Drop your files in (`.md`, `.txt`, `.pdf`, `.png`, `.jpg`, `.webp`, code files, exported project folders — anything).
+3. Paste `INIT_PROMPT_import.md` into your AI tool.
+
+The AI will:
+- Inventory every file you dropped in
+- Extract all ~120 placeholder values from your content (with confidence rating: HIGH / MEDIUM / LOW)
+- Show you an extraction report — what was found, what was inferred, what is missing
+- Ask targeted gap-fill questions *only* for the missing or ambiguous items
+- Generate the same complete set of project files as the standard wizard
+
+> **Supported AI tools for Import Mode:** Any vision-capable model handles PNG mockups (Claude, GPT-4o). Text-only models skip images and ask more questions. All tools handle `.md`, `.txt`, and code files.
+
+See `import/README.md` inside the folder for full details.
 
 ---
 

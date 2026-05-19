@@ -33,7 +33,11 @@ FRAMEWORK_MAP.local.md
 # icons
 vibe-forge-icons/
 
+# Import mode — user's source docs (dropped before running INIT_PROMPT_import.md)
+import/
+
 # GUI internal planning / design docs (not for public consumption)
 GUI_PLAN.md
 .claude/DESIGN.md
 .claude/PRODUCT.md
+doc/PLAN_IMPORT_MODE.md

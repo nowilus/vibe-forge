@@ -54,6 +54,10 @@ Before Q1, send the user this short paragraph (translated to their language once
 > 1. **Option E** in any single question — I pick a sensible default for that question and explain why in one sentence.
 > 2. **`/skip-section`** at any time — I draft the entire remaining section using a one-line vibe you give me, then I summarise what I am about to fill in, and only proceed after you say "yes". Anything I auto-filled will be tagged `🤖` in the final summary so you can review later.
 
+### 0.5 Import Mode
+
+Already have existing docs (PRODUCT.md, DESIGN.md, architecture plan, mockups)? Use `INIT_PROMPT_import.md` instead — it reads your files, extracts all placeholder values automatically, and only asks targeted questions for the gaps.
+
 ---
 
 ## 1. Interview rules (binding for you, the LLM)

@@ -12,6 +12,7 @@
 - 0.2 Language detection.
 - 0.3 `askUserQuestion` preferred, numbered Markdown fallback.
 - 0.4 Explain option E and `/skip-section` ONCE before Q1.
+- 0.5 Already have existing docs (PRODUCT.md, DESIGN.md, mockups)? Use `INIT_PROMPT_import.md` instead — it extracts answers from your files and only asks about gaps.
 
 ## 1. Interview rules (identical to standard)
 

@@ -199,6 +199,24 @@ export const pl: Locale = {
     validationProjectName: "Nazwa projektu jest wymagana.",
     validationCustomStack: "Podaj swój własny stos.",
     stepsNav: "Kroki konfiguracji",
+    import: {
+      modeScratch: "Zacznij od zera",
+      modeImport: "Importuj z dokumentów",
+      modeDesc: "Wrzuć istniejący PRODUCT.md, DESIGN.md lub inne dokumenty do folderu import/ i pozwól AI wyodrębnić odpowiedzi automatycznie.",
+      noFiles: "Brak plików w folderze import/.",
+      noFilesHint: "Dodaj pliki .md lub .txt do folderu import/ w katalogu głównym projektu, a następnie spróbuj ponownie.",
+      filesFound: (n: number) => `${n} ${n === 1 ? "plik gotowy" : n < 5 ? "pliki gotowe" : "plików gotowych"} do ekstrakcji`,
+      extractBtn: "Wyodrębnij z moich dokumentów",
+      extracting: "Wyodrębnianie…",
+      extractSuccess: "Wyodrębniono! Przejrzyj i dostosuj wstępnie wypełnione odpowiedzi poniżej.",
+      extractError: "Ekstrakcja nie powiodła się. Możesz wypełnić kreator ręcznie.",
+      confidence: {
+        high: "znaleziono",
+        medium: "wywnioskowano",
+        low: "zgadnięto",
+        default: "domyślne",
+      },
+    },
   },
   checks: {
     names: {

@@ -9,6 +9,8 @@ import {
   Loader2,
   AlertTriangle,
   FolderOpen,
+  Upload,
+  FileCheck,
 } from "lucide-react";
 import type {
   WizardAnswers,
@@ -592,6 +594,116 @@ function StepPreview({
   );
 }
 
+// ─── import panel ────────────────────────────────────────────────────────────
+
+interface ImportStatusData {
+  exists: boolean;
+  files: string[];
+}
+
+interface ExtractionResult {
+  answers: WizardAnswers;
+  filesRead: string[];
+}
+
+function ImportPanel({ onExtracted }: { onExtracted: (answers: WizardAnswers, filesRead: string[]) => void }) {
+  const { t } = useLang();
+  const ti = t.setup.import;
+  const [status, setStatus] = useState<ImportStatusData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [extracting, setExtracting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch("/api/import/status")
+      .then((r) => r.json())
+      .then(setStatus)
+      .catch(() => setStatus({ exists: false, files: [] }))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const extract = async () => {
+    setExtracting(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/import/extract", { method: "POST" });
+      if (!res.ok) throw new Error("server error");
+      const data: ExtractionResult = await res.json();
+      onExtracted(data.answers, data.filesRead);
+    } catch {
+      setError(ti.extractError);
+    } finally {
+      setExtracting(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center gap-2 text-vf-muted py-10 justify-center">
+        <Loader2 size={16} className="animate-spin" />
+        <span className="text-sm">{t.common.loading}</span>
+      </div>
+    );
+  }
+
+  const hasFiles = status && status.files.length > 0;
+
+  return (
+    <div className="flex flex-col gap-5">
+      <p className="text-sm text-vf-muted">{ti.modeDesc}</p>
+
+      <div className="rounded-xl border border-vf-border bg-vf-surface p-4 flex flex-col gap-3">
+        {hasFiles ? (
+          <>
+            <div className="flex items-center gap-2 text-sm font-medium text-vf-text">
+              <FileCheck size={15} className="text-vf-success shrink-0" />
+              {ti.filesFound(status.files.length)}
+            </div>
+            <ul className="flex flex-col gap-1">
+              {status.files.map((f) => (
+                <li key={f} className="flex items-center gap-2 text-xs text-vf-muted font-mono">
+                  <FileText size={12} className="shrink-0" />
+                  {f}
+                </li>
+              ))}
+            </ul>
+          </>
+        ) : (
+          <>
+            <p className="text-sm font-medium text-vf-text">{ti.noFiles}</p>
+            <p className="text-xs text-vf-muted">{ti.noFilesHint}</p>
+          </>
+        )}
+      </div>
+
+      {error && (
+        <p className="text-xs text-vf-danger flex items-center gap-1.5">
+          <AlertTriangle size={12} />
+          {error}
+        </p>
+      )}
+
+      <button
+        disabled={!hasFiles || extracting}
+        onClick={extract}
+        className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-vf-accent text-white font-semibold text-sm hover:bg-vf-accent/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+      >
+        {extracting ? (
+          <>
+            <Loader2 size={16} className="animate-spin" />
+            {ti.extracting}
+          </>
+        ) : (
+          <>
+            <Upload size={16} />
+            {ti.extractBtn}
+          </>
+        )}
+      </button>
+    </div>
+  );
+}
+
 // ─── main component ───────────────────────────────────────────────────────────
 
 export function Setup() {
@@ -603,6 +715,8 @@ export function Setup() {
   const [generating, setGenerating] = useState(false);
   const [result, setResult] = useState<SetupGenerateResult | null>(null);
   const [status, setStatus] = useState<SetupStatus | null>(null);
+  const [mode, setMode] = useState<"wizard" | "import">("wizard");
+  const [importBanner, setImportBanner] = useState<string | null>(null);
 
   useEffect(() => {
     fetch("/api/setup/status")
@@ -644,6 +758,12 @@ export function Setup() {
     }
   };
 
+  const handleExtracted = (extracted: WizardAnswers, filesRead: string[]) => {
+    setAnswers(extracted);
+    setMode("wizard");
+    setImportBanner(t.setup.import.extractSuccess + (filesRead.length ? ` (${filesRead.join(", ")})` : ""));
+  };
+
   const { title, desc } = t.setup.stepTitles[step - 1];
 
   return (
@@ -660,6 +780,40 @@ export function Setup() {
         </div>
       )}
 
+      {!result && (
+        <div className="flex gap-2 mb-6">
+          <button
+            onClick={() => { setMode("wizard"); setImportBanner(null); }}
+            className={`flex items-center gap-1.5 px-4 py-2 rounded-lg border text-sm font-medium transition-colors ${
+              mode === "wizard"
+                ? "border-vf-accent bg-vf-accent/10 text-vf-accent"
+                : "border-vf-border text-vf-muted hover:border-vf-accent/50 hover:text-vf-text"
+            }`}
+          >
+            <Wand2 size={14} />
+            {t.setup.import.modeScratch}
+          </button>
+          <button
+            onClick={() => { setMode("import"); setImportBanner(null); setStep(1); }}
+            className={`flex items-center gap-1.5 px-4 py-2 rounded-lg border text-sm font-medium transition-colors ${
+              mode === "import"
+                ? "border-vf-accent bg-vf-accent/10 text-vf-accent"
+                : "border-vf-border text-vf-muted hover:border-vf-accent/50 hover:text-vf-text"
+            }`}
+          >
+            <Upload size={14} />
+            {t.setup.import.modeImport}
+          </button>
+        </div>
+      )}
+
+      {importBanner && (
+        <div className="flex items-start gap-3 px-4 py-3 rounded-lg bg-vf-success/10 border border-vf-success/20 mb-6">
+          <FileCheck size={16} className="text-vf-success shrink-0 mt-0.5" />
+          <p className="text-xs text-vf-muted">{importBanner}</p>
+        </div>
+      )}
+
       <StepBar current={step} />
 
       <div className="mb-6">
@@ -668,7 +822,8 @@ export function Setup() {
       </div>
 
       <div className="mb-6">
-        {step === 1 && <StepBasics answers={answers} setAnswers={setAnswers} />}
+        {step === 1 && mode === "import" && <ImportPanel onExtracted={handleExtracted} />}
+        {step === 1 && mode === "wizard" && <StepBasics answers={answers} setAnswers={setAnswers} />}
         {step === 2 && <StepStack answers={answers} setAnswers={setAnswers} />}
         {step === 3 && <StepTesting answers={answers} setAnswers={setAnswers} />}
         {step === 4 && <StepDeployment answers={answers} setAnswers={setAnswers} />}
@@ -708,7 +863,7 @@ export function Setup() {
             <FolderOpen size={14} />
             {t.setup.openProject}
           </button>
-        ) : step < 6 ? (
+        ) : step < 6 && !(mode === "import" && step === 1) ? (
           <button
             onClick={goNext}
             className="flex items-center gap-1.5 px-5 py-2 rounded-lg bg-vf-accent text-white text-sm font-semibold hover:bg-vf-accent/90 transition-colors"
