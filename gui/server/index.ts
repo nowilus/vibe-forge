@@ -13,7 +13,7 @@ import { importRoutes } from "./routes/import.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const PROJECT_ROOT = process.env.VF_PROJECT_ROOT ?? process.cwd();
+const PROJECT_ROOT = process.env.VF_PROJECT_ROOT ?? path.resolve(__dirname, "../../");
 const PORT = Number(process.env.VF_PORT ?? 7432);
 
 const app = Fastify({ logger: false });
