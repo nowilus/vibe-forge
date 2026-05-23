@@ -30,6 +30,7 @@ Format: based on [Keep a Changelog](https://keepachangelog.com/). The framework 
 ## [Unreleased]
 
 ### Added
+- **Karpathy behavioral guidelines** ([andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills)) across all agent-config templates: `templates/agent-configs/_shared/karpathy-guidelines.md`, Cursor `.cursor/rules/karpathy-guidelines.mdc.template` (`alwaysApply: true`), and immutable **Implementation guidelines** sections in `CLAUDE.md`, `AGENTS.md`, `.cursorrules`, Windsurf, Copilot, and Lovable templates.
 - Initial public skeleton of `vibe-forge`.
 - Sentinel file `.vibe-forge-root` and minimal baseline `.gitignore` / `.env.example` at the repo root.
 - Framework README with the nine-step happy path, layout overview, FAQ, and `/atomic-prompts` highlight.

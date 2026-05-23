@@ -24,6 +24,24 @@ const TDD_LABEL: Record<WizardAnswers["tddTier"], string> = {
   full: "Full TDD (≥ 80 % coverage)",
 };
 
+/** Immutable — https://github.com/multica-ai/andrej-karpathy-skills */
+const KARPATHY_IMPLEMENTATION_GUIDELINES = `## Implementation guidelines (immutable)
+
+> Source: [andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills). Do not edit this section by hand.
+
+### 1. Think Before Coding
+State assumptions; present interpretations; suggest simpler approaches; stop and ask when unclear.
+
+### 2. Simplicity First
+Minimum code for the request only — no speculative features, abstractions, or unrequested flexibility.
+
+### 3. Surgical Changes
+Change only what the request requires; match existing style; don't refactor unrelated code; remove only orphans your edit created.
+
+### 4. Goal-Driven Execution
+Define verifiable success criteria; use test-first goals for bugs and validation; state a brief plan with verify steps for multi-step work.
+`;
+
 function state(a: WizardAnswers): string {
   return `# Project state
 
@@ -421,6 +439,8 @@ Full rules in \`PROJECT_RULES.md\`. Key constraints:
 - Validate all user input at system boundaries
 - Error handling must be explicit — never swallow silently
 
+${KARPATHY_IMPLEMENTATION_GUIDELINES}
+
 ## Atomic prompts
 Type \`/atomic-prompts\` to turn any one-line idea into a structured prompt file in \`atomic-prompts/\`.
 
@@ -449,6 +469,8 @@ Never commit secrets or .env files.
 Validate all user input at system boundaries.
 Handle errors explicitly — never swallow silently.
 
+${KARPATHY_IMPLEMENTATION_GUIDELINES}
+
 ## Session start
 1. Read PROJECT_MAP.md
 2. Read STATE.md
@@ -474,6 +496,8 @@ TDD: ${TDD_LABEL[a.tddTier]}
 ## Rules
 ${TDD_RULE[a.tddTier]}
 Never commit .env or secrets. Validate all input. Explicit error handling.
+
+${KARPATHY_IMPLEMENTATION_GUIDELINES}
 
 ## Session start
 1. Read PROJECT_MAP.md  2. Read STATE.md  3. Scan LESSONS.md  4. Work

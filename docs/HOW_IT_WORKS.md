@@ -94,9 +94,9 @@ Each file knows its job. None of them tries to do somebody else's. The agent rul
 
 The single source of truth is `PROJECT_RULES.md`. Every agent-specific rule file is a *projection* of it into the format that tool expects:
 
-- `.cursorrules` → Cursor's flat rule file plus `.cursor/rules/*.mdc` per-glob.
-- `CLAUDE.md` → Anthropic Claude Code's project-level memory file.
-- `AGENTS.md` → Codex CLI's agent instructions.
+- `.cursorrules` → Cursor's flat rule file plus `.cursor/rules/*.mdc` per-glob (including `karpathy-guidelines.mdc` with `alwaysApply: true` on every session).
+- `CLAUDE.md` → Anthropic Claude Code's project-level memory file (includes a fixed **Implementation guidelines** section from [andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills)).
+- `AGENTS.md` → Codex CLI's agent instructions (same immutable Karpathy section).
 - `.windsurfrules` → Windsurf's equivalent.
 - `.github/copilot-instructions.md` → Copilot Chat repository instructions.
 - Lovable Project Knowledge → paste-ready text block.

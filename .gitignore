@@ -40,4 +40,7 @@ import/
 GUI_PLAN.md
 .claude/DESIGN.md
 .claude/PRODUCT.md
-doc/PLAN_IMPORT_MODE.md
+
+#Others
+docs/PLAN_IMPORT_MODE.md
+docs/PLAN_GUI_WIZARD_V2.md

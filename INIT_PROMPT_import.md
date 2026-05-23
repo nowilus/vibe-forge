@@ -326,7 +326,7 @@ On **"yes, generate"** — follow `INIT_PROMPT_standard.md` Section 11 step 5 ex
 
 1. Materialise every template in `templates/project-docs/` → root, substituting `<<PLACEHOLDERS>>` with extracted/gap-filled/default values.
 2. Materialise every template in `templates/project-rules/` → root.
-3. Materialise selected files from `templates/agent-configs/` → their target paths.
+3. Materialise selected files from `templates/agent-configs/` → their target paths (for Cursor: all `.cursor/rules/*.mdc`, including `karpathy-guidelines.mdc` with `alwaysApply: true`; for Claude/Codex/Windsurf/Copilot/Lovable: embedded **Implementation guidelines (immutable)** from [andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills)).
 4. Copy `templates/env-examples/*.env.example` → `.env.example`; extend with hosting-specific snippets.
 5. Extend `.gitignore` with stack-specific entries.
 6. Copy selected `/atomic-prompts` skill variants (source: `skills/`).

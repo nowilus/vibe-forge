@@ -24,7 +24,7 @@ run /atomic-prompts on this: <idea>
 <multi-line idea body>
 ```
 
-Other agent rule files in this project (`.cursorrules`, `.cursor/rules/00-project-anchor.mdc`, `CLAUDE.md`, `AGENTS.md`, …) explicitly route these invocations here.
+Other agent rule files in this project (`.cursorrules`, `.cursor/rules/00-project-anchor.mdc`, `.cursor/rules/karpathy-guidelines.mdc`, `CLAUDE.md`, `AGENTS.md`, …) explicitly route these invocations here.
 
 ---
 

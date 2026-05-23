@@ -54,6 +54,12 @@ Non-negotiables:
 
 For `/atomic-prompts <idea>` requests, do NOT implement inline — instead produce `atomic-prompts/NNNN-<slug>.md` using the schema in `docs/PROMPT_AUTHORING_GUIDE.md` (or the locally installed skill file). Print the path and the count of acceptance criteria, then stop.
 
+Implementation guidelines (immutable — from andrej-karpathy-skills; do not edit when pasting):
+1. Think before coding: state assumptions; present interpretations; ask when unclear.
+2. Simplicity first: minimum code for the request; no speculative features or abstractions.
+3. Surgical changes: touch only what the request requires; match existing style; no drive-by refactors.
+4. Goal-driven execution: verifiable success criteria; test-first for bugs/validation; plan with verify steps for multi-step work.
+
 When in doubt, ask one targeted question with 3-4 candidate answers. Do not silently choose.
 
 <<<COPY_TO_HERE>>>

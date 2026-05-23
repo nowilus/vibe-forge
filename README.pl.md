@@ -360,8 +360,9 @@ vibe-forge/
 │   │   ├── DATABASE.md.template
 │   │   └── DEPLOYMENT.md.template
 │   ├── agent-configs/               ← pliki reguł pod konkretne narzędzia (z PROJECT_RULES)
-│   │   ├── cursor/        (.cursorrules.template, .cursor/rules/*)
-│   │   ├── claude-code/   (CLAUDE.md.template)
+│   │   ├── _shared/       (karpathy-guidelines.md — kanoniczna treść Karpathy)
+│   │   ├── cursor/        (.cursorrules.template, .cursor/rules/* incl. karpathy-guidelines.mdc)
+│   │   ├── claude-code/   (CLAUDE.md.template — sekcja Implementation guidelines na sztywno)
 │   │   ├── codex/         (AGENTS.md.template)
 │   │   ├── windsurf/      (.windsurfrules.template)
 │   │   ├── copilot/       (.github/copilot-instructions.md.template)
@@ -417,12 +418,14 @@ Po zakończeniu wywiadu:
 
 | Narzędzie      | Generowany plik                                   | Zainstalowane umiejętności                                                   |
 | -------------- | ------------------------------------------------- | ---------------------------------------------------------------------------- |
-| Cursor         | `.cursorrules`, `.cursor/rules/*.mdc`            | `/atomic-prompts`, `/deploy-guide`, `/project-health`                        |
-| Claude Code    | `CLAUDE.md`, `.claude/hooks/`, `.claude/skills/` | `/atomic-prompts`, `/deploy-guide`, `/project-health` + 7 hooków             |
+| Cursor         | `.cursorrules`, `.cursor/rules/*.mdc` (w tym `karpathy-guidelines.mdc`, always on) | `/atomic-prompts`, `/deploy-guide`, `/project-health`                        |
+| Claude Code    | `CLAUDE.md` (sekcja Karpathy na sztywno), `.claude/hooks/`, `.claude/skills/` | `/atomic-prompts`, `/deploy-guide`, `/project-health` + 7 hooków             |
 | Codex CLI      | `AGENTS.md`, `.codex/skills/`                    | `/atomic-prompts`, `/deploy-guide`, `/project-health`                        |
 | Windsurf       | `.windsurfrules`                                  | Tylko reguły (Windsurf nie ma natywnego systemu hooków/umiejętności).        |
 | GitHub Copilot | `.github/copilot-instructions.md`               | Tylko reguły (dla API instrukcji repozytorium Copilot Chat).                 |
 | Lovable        | blok Lovable Project Knowledge (gotowy do wklejenia) | Tylko reguły — generowany z `PROJECT_RULES.md`.                         |
+
+Wszystkie konfiguracje agentów zawierają **[wytyczne behawioralne Karpathy] (myśl przed kodem, prostota, chirurgiczne zmiany, cele weryfikowalne). Cursor ładuje je przez MDC `alwaysApply`; pozostałe narzędzia — przez stałą sekcję **Implementation guidelines (immutable)** (nie edytuj ręcznie).
 
 **Dlaczego hooki tylko w Claude Code?** Claude Code jest jedynym narzędziem na tej liście z systemem hooków pierwszej klasy (zdarzenia `PreToolUse`, `PostToolUse`, `Stop`). Wszystkie pozostałe narzędzia otrzymują równoważne reguły osadzone w plikach konfiguracyjnych — polegają na przestrzeganiu reguł przez agenta, a nie na egzekucji na poziomie systemu operacyjnego.
 
