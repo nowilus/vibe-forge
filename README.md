@@ -114,6 +114,7 @@ git init
 #    - INIT_PROMPT_short.md      (~10 questions, fastest, mostly LLM defaults)
 #    - INIT_PROMPT_standard.md   (~30 questions, recommended for most projects)
 #    - INIT_PROMPT_deep.md       (~60+ questions, full audit-grade interview)
+#    - INIT_PROMPT_import.md     (already have docs? skip the wizard — see below)
 
 # 4. Answer the questions. Use option E or /skip-section whenever you
 #    do not know or do not care.
@@ -123,6 +124,27 @@ git init
 ```
 
 > **Tip:** Run the interview in a *fresh* chat session of your AI tool, with the cloned folder as the workspace root. Do not paste the prompt into a long, unrelated conversation — it relies on a clean context.
+
+### Already have docs? Use Import Mode
+
+If you have existing project documents — a PRODUCT.md, DESIGN.md, architecture plan, wireframe PNGs, or any combination — you can skip the question-by-question wizard entirely.
+
+**How it works:**
+
+1. Create an `import/` folder at the repo root.
+2. Drop your files in (`.md`, `.txt`, `.pdf`, `.png`, `.jpg`, `.webp`, code files, exported project folders — anything).
+3. Paste `INIT_PROMPT_import.md` into your AI tool.
+
+The AI will:
+- Inventory every file you dropped in
+- Extract all ~120 placeholder values from your content (with confidence rating: HIGH / MEDIUM / LOW)
+- Show you an extraction report — what was found, what was inferred, what is missing
+- Ask targeted gap-fill questions *only* for the missing or ambiguous items
+- Generate the same complete set of project files as the standard wizard
+
+> **Supported AI tools for Import Mode:** Any vision-capable model handles PNG mockups (Claude, GPT-4o). Text-only models skip images and ask more questions. All tools handle `.md`, `.txt`, and code files.
+
+See `import/README.md` inside the folder for full details.
 
 ---
 
@@ -333,8 +355,9 @@ vibe-forge/
 │   │   ├── DATABASE.md.template
 │   │   └── DEPLOYMENT.md.template
 │   ├── agent-configs/               ← tool-specific rule files (generated from PROJECT_RULES)
-│   │   ├── cursor/        (.cursorrules.template, .cursor/rules/*)
-│   │   ├── claude-code/   (CLAUDE.md.template)
+│   │   ├── _shared/       (karpathy-guidelines.md — canonical Karpathy body)
+│   │   ├── cursor/        (.cursorrules.template, .cursor/rules/* incl. karpathy-guidelines.mdc)
+│   │   ├── claude-code/   (CLAUDE.md.template — immutable Implementation guidelines section)
 │   │   ├── codex/         (AGENTS.md.template)
 │   │   ├── windsurf/      (.windsurfrules.template)
 │   │   ├── copilot/       (.github/copilot-instructions.md.template)
@@ -390,12 +413,14 @@ After the interview ends:
 
 | Tool           | File generated                                   | Skills installed                                                  |
 | -------------- | ------------------------------------------------ | ----------------------------------------------------------------- |
-| Cursor         | `.cursorrules`, `.cursor/rules/*.mdc`            | `/atomic-prompts`, `/deploy-guide`, `/project-health`             |
-| Claude Code    | `CLAUDE.md`, `.claude/hooks/`, `.claude/skills/` | `/atomic-prompts`, `/deploy-guide`, `/project-health` + 7 hooks   |
+| Cursor         | `.cursorrules`, `.cursor/rules/*.mdc` (incl. `karpathy-guidelines.mdc`, always on) | `/atomic-prompts`, `/deploy-guide`, `/project-health`             |
+| Claude Code    | `CLAUDE.md` (immutable Karpathy section), `.claude/hooks/`, `.claude/skills/` | `/atomic-prompts`, `/deploy-guide`, `/project-health` + 7 hooks   |
 | Codex CLI      | `AGENTS.md`, `.codex/skills/`                    | `/atomic-prompts`, `/deploy-guide`, `/project-health`             |
 | Windsurf       | `.windsurfrules`                                 | Rules only (Windsurf has no native hook/skill system).            |
 | GitHub Copilot | `.github/copilot-instructions.md`               | Rules only (for the Copilot Chat repository instructions API).    |
 | Lovable        | Lovable Project Knowledge block (paste-ready)    | Rules only — generated from `PROJECT_RULES.md`.                   |
+
+All agent configs embed **[Karpathy behavioral guidelines] (think before coding, simplicity, surgical changes, goal-driven execution). Cursor loads them via `alwaysApply` MDC; other tools get a fixed **Implementation guidelines (immutable)** section — do not edit by hand.
 
 **Why are hooks Claude Code-only?** Claude Code is the only tool in this list with a first-class hook system (`PreToolUse`, `PostToolUse`, `Stop` events). All other tools receive the equivalent rules embedded in their config files — they just rely on agent compliance rather than OS-level enforcement.
 
@@ -484,6 +509,17 @@ A. Yes — edit `PROJECT_RULES.md` and regenerate the agent configs (any AI can 
 ---
 
 ## Framework changelog
+
+### v1.4
+
+- **Import Mode (`INIT_PROMPT_import.md`):** New alternative interview flow. Drop existing documents (`.md`, `.txt`, `.pdf`, `.png` mockups, code exports) into an `import/` folder and the AI extracts all ~120 placeholder values automatically. Gap-fill questions asked only for missing or ambiguous items. Output identical to the standard wizard.
+- **`import/README.md`:** Short guide explaining supported file types and how to use Import Mode.
+- **Embedded placeholder extraction map:** Full map embedded in `INIT_PROMPT_import.md` — covers all placeholders across the six project-rule templates and seven project-doc templates, with confidence rules (HIGH / MEDIUM / LOW) and search patterns per placeholder.
+- **Conflict detection:** When two source files contain contradictory information, Import Mode explicitly flags the conflict and asks the user to resolve it once — never silently picks a side.
+- **Vision support:** `.png` / `.jpg` / `.webp` files analysed for dominant colours (`<<BRAND_PRIMARY>>`), typography (`<<FONT_PRIMARY>>`), and layout patterns. Confidence always MEDIUM or LOW for visual extraction.
+- **Cross-references:** One-line mention added to Section 0 of `INIT_PROMPT_short/standard/deep.md` — "Already have docs? See `INIT_PROMPT_import.md`".
+- **`import/` added to `.gitignore`.**
+- **Setup screen in GUI dashboard:** New Setup screen (`/setup`) in `vibe-forge-ui` with two modes: step-by-step wizard and an import panel that reads the `import/` folder and extracts answers via API (`GET /api/import/status`, `POST /api/import/extract`).
 
 ### v1.3
 

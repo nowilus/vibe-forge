@@ -197,6 +197,24 @@ export const en = {
     validationProjectName: "Project name is required.",
     validationCustomStack: "Please enter your custom stack.",
     stepsNav: "Setup steps",
+    import: {
+      modeScratch: "Start from scratch",
+      modeImport: "Import from docs",
+      modeDesc: "Drop your existing PRODUCT.md, DESIGN.md, or other docs into the import/ folder and let the AI extract answers automatically.",
+      noFiles: "No files found in import/ folder.",
+      noFilesHint: "Add .md or .txt files to the import/ folder in your project root, then try again.",
+      filesFound: (n: number) => `${n} file${n !== 1 ? "s" : ""} ready to extract`,
+      extractBtn: "Extract from my docs",
+      extracting: "Extracting…",
+      extractSuccess: "Extracted! Review and adjust the pre-filled answers below.",
+      extractError: "Extraction failed. You can still fill in the wizard manually.",
+      confidence: {
+        high: "found",
+        medium: "inferred",
+        low: "guessed",
+        default: "default",
+      },
+    },
   },
   checks: {
     names: {

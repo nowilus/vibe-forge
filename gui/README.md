@@ -27,6 +27,7 @@ npm run dev
 | Health | `/health` | `GET /api/health` |
 | Prompts | `/prompts` | `GET /api/prompts`, `POST /api/prompts`, `GET /api/prompts/:file` |
 | Hooks Monitor | `/hooks` | `GET /api/hooks` |
+| Setup | `/setup` | `GET /api/setup/status`, `POST /api/setup/preview`, `POST /api/setup/generate`, `GET /api/import/status`, `POST /api/import/extract` |
 
 ## API reference
 
@@ -57,6 +58,23 @@ Creates a new prompt file. Body: `{ filename, title, status, content }`.
 ### `GET /api/hooks`
 Reads `.claude/settings.json` and `.vibe-forge/hook-events.json` from the project root.
 Returns `{ hooks, totalDefined, totalKnown, settingsFound, recentEvents }`.
+
+### `GET /api/setup/status`
+Returns whether vibe-forge scaffolding is still present: `{ initialized, hasTemplates, hasInitPrompt, hasVibeForgRoot }`.
+
+### `POST /api/setup/preview`
+Accepts `WizardAnswers` body, returns a preview list of files that would be generated.
+
+### `POST /api/setup/generate`
+Accepts `WizardAnswers` body, materializes all project-rules and project-docs templates with the provided values. Returns `{ filesWritten: string[] }`.
+
+### `GET /api/import/status`
+Checks whether an `import/` folder exists at the project root and lists its files.
+Returns `{ exists: boolean, files: string[] }`.
+
+### `POST /api/import/extract`
+Reads all files in `import/`, runs the regex-based extraction engine, and returns pre-filled `WizardAnswers` with a confidence map.
+Returns `{ answers: WizardAnswers, confidence: Record<keyof WizardAnswers, "high"|"medium"|"low"|"default">, filesRead: string[] }`.
 
 ## Health checks
 

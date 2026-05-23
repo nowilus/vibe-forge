@@ -77,6 +77,26 @@ Write test stubs alongside new code. Every new function needs at least one happy
 - Parameterised queries only — no string-concatenated SQL.
 - If a secret lands in source, stop and flag it immediately.
 
+## Implementation guidelines (immutable)
+
+> **Do not edit this section by hand.** Source: [andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills). Cursor also loads `.cursor/rules/karpathy-guidelines.mdc` (`alwaysApply: true`) — keep both in sync when updating upstream.
+
+### 1. Think Before Coding
+
+State assumptions; present interpretations; suggest simpler approaches; stop and ask when unclear.
+
+### 2. Simplicity First
+
+Minimum code for the request only — no speculative features, abstractions, or unrequested flexibility.
+
+### 3. Surgical Changes
+
+Change only what the request requires; match existing style; don't refactor unrelated code; remove only orphans your edit created.
+
+### 4. Goal-Driven Execution
+
+Define verifiable success criteria; use test-first goals for bugs and validation; state a brief plan with verify steps for multi-step work.
+
 ## Skills
 
 - `/atomic-prompts <idea>` → `.cursor/commands/atomic-prompts.md`

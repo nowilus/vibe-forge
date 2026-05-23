@@ -53,6 +53,26 @@ No new dependencies without explicit approval.
 - Hardcode secrets, API keys, or tokens anywhere in source files.
 - Commit `.env` files (`.env.example` only).
 
+## Implementation guidelines (immutable)
+
+> **Do not edit this section by hand.** Source: [andrej-karpathy-skills].
+
+### 1. Think Before Coding
+
+State assumptions; present interpretations; suggest simpler approaches; stop and ask when unclear.
+
+### 2. Simplicity First
+
+Minimum code for the request only — no speculative features, abstractions, or unrequested flexibility.
+
+### 3. Surgical Changes
+
+Change only what the request requires; match existing style; don't refactor unrelated code; remove only orphans your edit created.
+
+### 4. Goal-Driven Execution
+
+Define verifiable success criteria; use test-first goals for bugs and validation; state a brief plan with verify steps for multi-step work.
+
 ## When unsure
 
 Ask one targeted question with 3-4 candidate answers and wait.

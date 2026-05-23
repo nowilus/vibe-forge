@@ -6,9 +6,31 @@ Format: based on [Keep a Changelog](https://keepachangelog.com/). The framework 
 
 ---
 
+## [2026-05-19] — v1.4 Import Mode
+
+### Added
+- `INIT_PROMPT_import.md` — new Import Mode wizard. Drop existing docs (`.md`, `.txt`, `.pdf`, `.png` mockups, code exports) into `import/` and the AI extracts all ~120 placeholder values automatically. Gap-fill questions asked only for missing or ambiguous items. Output identical to standard wizard.
+- `import/README.md` — short guide explaining supported file types and how to use Import Mode.
+- Full **Placeholder Extraction Map** embedded in `INIT_PROMPT_import.md` — covers all placeholders across the six project-rules templates and seven project-docs templates, with confidence rules (HIGH / MEDIUM / LOW) and search patterns per placeholder.
+- Conflict detection: when two source files disagree on a value, Import Mode flags the conflict explicitly and asks the user to resolve it once — never silently picks one side.
+- Vision support: `.png` / `.jpg` / `.webp` files analyzed for dominant colors (`<<BRAND_PRIMARY>>`), typography (`<<FONT_PRIMARY>>`), and layout patterns. Confidence always MEDIUM or LOW for visual extraction.
+- Cross-references added to `INIT_PROMPT_short/standard/deep.md` Section 0 ("Already have docs? See `INIT_PROMPT_import.md`").
+- `import/` added to `.gitignore`.
+- Import Mode section added to `README.md` Quick start.
+- Import Mode philosophy added to `docs/HOW_IT_WORKS.md` §3b.
+
+### Design decisions
+- Import Mode is a **separate file**, not a flag in existing prompts — keeps existing flows untouched and consistent with the "one file = one flow" pattern.
+- The extraction map lives **inline in the prompt**, not in external code — no runtime required.
+- Gap-fill questions reuse **exact option sets** from `INIT_PROMPT_standard.md` question bank — no UX drift between wizard and import.
+- `import/` folder is **gitignored and removed** during cleanup — same lifecycle as `templates/`.
+
+---
+
 ## [Unreleased]
 
 ### Added
+- **Karpathy behavioral guidelines** ([andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills)) across all agent-config templates: `templates/agent-configs/_shared/karpathy-guidelines.md`, Cursor `.cursor/rules/karpathy-guidelines.mdc.template` (`alwaysApply: true`), and immutable **Implementation guidelines** sections in `CLAUDE.md`, `AGENTS.md`, `.cursorrules`, Windsurf, Copilot, and Lovable templates.
 - Initial public skeleton of `vibe-forge`.
 - Sentinel file `.vibe-forge-root` and minimal baseline `.gitignore` / `.env.example` at the repo root.
 - Framework README with the nine-step happy path, layout overview, FAQ, and `/atomic-prompts` highlight.

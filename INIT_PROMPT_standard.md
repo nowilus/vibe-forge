@@ -54,6 +54,10 @@ Before Q1, send the user this short paragraph (translated to their language once
 > 1. **Option E** in any single question — I pick a sensible default for that question and explain why in one sentence.
 > 2. **`/skip-section`** at any time — I draft the entire remaining section using a one-line vibe you give me, then I summarise what I am about to fill in, and only proceed after you say "yes". Anything I auto-filled will be tagged `🤖` in the final summary so you can review later.
 
+### 0.5 Import Mode
+
+Already have existing docs (PRODUCT.md, DESIGN.md, architecture plan, mockups)? Use `INIT_PROMPT_import.md` instead — it reads your files, extracts all placeholder values automatically, and only asks targeted questions for the gaps.
+
 ---
 
 ## 1. Interview rules (binding for you, the LLM)
@@ -452,7 +456,7 @@ After Q10.2, do the following — **in this order**:
 5. On `yes, generate`:
    - Materialise every template in `templates/project-docs/` → root, substituting `<<PLACEHOLDERS>>`.
    - Materialise every template in `templates/project-rules/` → root.
-   - Materialise selected files from `templates/agent-configs/` → their target paths (e.g. `.cursorrules` at root, `.cursor/rules/*.mdc`, `CLAUDE.md`, `AGENTS.md`, `.windsurfrules`, `.github/copilot-instructions.md`, paste-ready `LOVABLE_PROJECT_KNOWLEDGE.md` if Lovable was selected).
+   - Materialise selected files from `templates/agent-configs/` → their target paths (e.g. `.cursorrules` at root, `.cursor/rules/*.mdc` including **`karpathy-guidelines.mdc`** with `alwaysApply: true`, `CLAUDE.md`, `AGENTS.md`, `.windsurfrules`, `.github/copilot-instructions.md`, paste-ready `LOVABLE_PROJECT_KNOWLEDGE.md` if Lovable was selected). Karpathy guidelines are **always** included for every selected tool (canonical source: `templates/agent-configs/_shared/karpathy-guidelines.md`, upstream [andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills)).
    - Copy the relevant `templates/env-examples/*.env.example` → `.env.example` (replacing the placeholder), then extend with Vercel snippets if hosting is Vercel.
    - Extend `.gitignore` with stack-specific entries (`node_modules/`, `.next/`, `dist/`, `.venv/`, `*.log`, OS files, etc.).
    - Copy the selected `/atomic-prompts` skill variant(s) into the project (e.g. `.cursor/commands/atomic-prompts.md`, `.claude/skills/atomic-prompts/SKILL.md`, `.codex/skills/atomic-prompts/SKILL.md`). Skill source files live in `skills/` of the framework.

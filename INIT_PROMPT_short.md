@@ -12,6 +12,7 @@
 - **0.2 Language detection:** match the user's first reply.
 - **0.3 Mode:** prefer `askUserQuestion`, fall back to numbered Markdown (announce the fallback in one sentence).
 - **0.4 Escape hatches:** Option E per question, `/skip-section` per section (with two-step confirmation). Explain ONCE before Q1.
+- **0.5 Import Mode:** Already have existing docs (PRODUCT.md, DESIGN.md, mockups)? Use `INIT_PROMPT_import.md` instead — it extracts answers from your files and only asks about gaps.
 
 ## 1. Interview rules (identical to standard)
 

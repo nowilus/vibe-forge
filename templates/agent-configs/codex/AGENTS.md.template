@@ -50,6 +50,38 @@ If invoked, generate `atomic-prompts/NNNN-<slug>.md` via `.codex/skills/atomic-p
 - Editing past CHANGELOG entries.
 - Writing to `templates/`.
 
+## Implementation guidelines (immutable)
+
+> **Do not edit this section by hand.** Source: [andrej-karpathy-skills].
+
+Guidelines that reduce common LLM coding mistakes. They bias toward caution over speed — for trivial tasks, use judgment.
+
+### 1. Think Before Coding
+
+**Don't assume. Don't hide confusion. Surface tradeoffs.**
+
+Before implementing: state assumptions; present multiple interpretations instead of picking silently; suggest simpler approaches; stop and ask when unclear.
+
+### 2. Simplicity First
+
+**Minimum code that solves the problem. Nothing speculative.**
+
+No scope creep, single-use abstractions, unrequested flexibility, or error handling for impossible cases. If 200 lines could be 50, rewrite.
+
+### 3. Surgical Changes
+
+**Touch only what you must. Clean up only your own mess.**
+
+Don't "improve" adjacent code. Don't refactor unbroken code. Match existing style. Mention unrelated dead code — don't delete it unless asked. Remove only orphans your change created.
+
+The test: every changed line traces to the user's request.
+
+### 4. Goal-Driven Execution
+
+**Define success criteria. Loop until verified.**
+
+Turn tasks into verifiable goals (tests for validation/bugs/refactors). For multi-step work, state a short plan with a verify step per step. Weak criteria ("make it work") need constant clarification.
+
 ## Testing policy
 
 <<#IF_TDD_NONE>>

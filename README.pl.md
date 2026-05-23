@@ -114,6 +114,7 @@ git init
 #    - INIT_PROMPT_short.md      (~10 pytań, najszybciej, głównie domyślne ustawienia modelu)
 #    - INIT_PROMPT_standard.md   (~30 pytań, zalecane dla większości projektów)
 #    - INIT_PROMPT_deep.md       (60+ pytań, wywiad w stylu audytowym)
+#    - INIT_PROMPT_import.md     (masz już dokumenty? pomiń wizard — patrz niżej)
 
 # 4. Odpowiadaj na pytania. Używaj opcji E albo /skip-section, gdy
 #    nie znasz odpowiedzi albo nie masz preferencji.
@@ -123,6 +124,27 @@ git init
 ```
 
 > **Wskazówka:** Uruchom wywiad w *świeżej* sesji czatu swojego narzędzia AI, ze sklonowanym folderem jako katalogiem głównym workspace'u. Nie wklejaj promptu w długą, niepowiązaną rozmowę — opiera się na czystym kontekście.
+
+### Masz już dokumenty? Użyj trybu importu
+
+Jeśli posiadasz istniejące dokumenty projektowe — PRODUCT.md, DESIGN.md, plan architektury, makiety PNG lub dowolną kombinację — możesz całkowicie pominąć wizard pytanie po pytaniu.
+
+**Jak to działa:**
+
+1. Utwórz folder `import/` w katalogu głównym repozytorium.
+2. Wrzuć swoje pliki (`.md`, `.txt`, `.pdf`, `.png`, `.jpg`, `.webp`, pliki kodu, wyeksportowane foldery projektów — cokolwiek).
+3. Wklej `INIT_PROMPT_import.md` do narzędzia AI.
+
+AI wykona:
+- Inwentaryzację każdego wrzuconego pliku
+- Wyodrębnienie wszystkich ~120 wartości placeholder z Twoich treści (z oceną pewności: HIGH / MEDIUM / LOW)
+- Wyświetlenie raportu ekstrakcji — co znaleziono, co wywnioskowano, czego brakuje
+- Zadanie ukierunkowanych pytań uzupełniających *tylko* dla brakujących lub niejednoznacznych elementów
+- Wygenerowanie tego samego kompletnego zestawu plików projektu co standardowy wizard
+
+> **Obsługiwane narzędzia AI dla trybu importu:** Każdy model obsługujący wizję przetwarza makiety PNG (Claude, GPT-4o). Modele tylko-tekstowe pomijają obrazy i zadają więcej pytań. Wszystkie narzędzia obsługują pliki `.md`, `.txt` i kodu.
+
+Szczegóły znajdziesz w `import/README.md` wewnątrz folderu.
 
 ---
 
@@ -338,8 +360,9 @@ vibe-forge/
 │   │   ├── DATABASE.md.template
 │   │   └── DEPLOYMENT.md.template
 │   ├── agent-configs/               ← pliki reguł pod konkretne narzędzia (z PROJECT_RULES)
-│   │   ├── cursor/        (.cursorrules.template, .cursor/rules/*)
-│   │   ├── claude-code/   (CLAUDE.md.template)
+│   │   ├── _shared/       (karpathy-guidelines.md — kanoniczna treść Karpathy)
+│   │   ├── cursor/        (.cursorrules.template, .cursor/rules/* incl. karpathy-guidelines.mdc)
+│   │   ├── claude-code/   (CLAUDE.md.template — sekcja Implementation guidelines na sztywno)
 │   │   ├── codex/         (AGENTS.md.template)
 │   │   ├── windsurf/      (.windsurfrules.template)
 │   │   ├── copilot/       (.github/copilot-instructions.md.template)
@@ -395,12 +418,14 @@ Po zakończeniu wywiadu:
 
 | Narzędzie      | Generowany plik                                   | Zainstalowane umiejętności                                                   |
 | -------------- | ------------------------------------------------- | ---------------------------------------------------------------------------- |
-| Cursor         | `.cursorrules`, `.cursor/rules/*.mdc`            | `/atomic-prompts`, `/deploy-guide`, `/project-health`                        |
-| Claude Code    | `CLAUDE.md`, `.claude/hooks/`, `.claude/skills/` | `/atomic-prompts`, `/deploy-guide`, `/project-health` + 7 hooków             |
+| Cursor         | `.cursorrules`, `.cursor/rules/*.mdc` (w tym `karpathy-guidelines.mdc`, always on) | `/atomic-prompts`, `/deploy-guide`, `/project-health`                        |
+| Claude Code    | `CLAUDE.md` (sekcja Karpathy na sztywno), `.claude/hooks/`, `.claude/skills/` | `/atomic-prompts`, `/deploy-guide`, `/project-health` + 7 hooków             |
 | Codex CLI      | `AGENTS.md`, `.codex/skills/`                    | `/atomic-prompts`, `/deploy-guide`, `/project-health`                        |
 | Windsurf       | `.windsurfrules`                                  | Tylko reguły (Windsurf nie ma natywnego systemu hooków/umiejętności).        |
 | GitHub Copilot | `.github/copilot-instructions.md`               | Tylko reguły (dla API instrukcji repozytorium Copilot Chat).                 |
 | Lovable        | blok Lovable Project Knowledge (gotowy do wklejenia) | Tylko reguły — generowany z `PROJECT_RULES.md`.                         |
+
+Wszystkie konfiguracje agentów zawierają **[wytyczne behawioralne Karpathy] (myśl przed kodem, prostota, chirurgiczne zmiany, cele weryfikowalne). Cursor ładuje je przez MDC `alwaysApply`; pozostałe narzędzia — przez stałą sekcję **Implementation guidelines (immutable)** (nie edytuj ręcznie).
 
 **Dlaczego hooki tylko w Claude Code?** Claude Code jest jedynym narzędziem na tej liście z systemem hooków pierwszej klasy (zdarzenia `PreToolUse`, `PostToolUse`, `Stop`). Wszystkie pozostałe narzędzia otrzymują równoważne reguły osadzone w plikach konfiguracyjnych — polegają na przestrzeganiu reguł przez agenta, a nie na egzekucji na poziomie systemu operacyjnego.
 
@@ -489,6 +514,17 @@ Ostatnia wiadomość każdego pliku `INIT_PROMPT_*.md` kończy się tą listą. 
 ---
 
 ## Dziennik zmian frameworku
+
+### v1.4
+
+- **Tryb importu (`INIT_PROMPT_import.md`):** Nowy, alternatywny przepływ wywiadu. Wrzuć istniejące dokumenty (`.md`, `.txt`, `.pdf`, makiety `.png`, eksporty kodu) do folderu `import/`, a AI automatycznie wyodrębni wszystkie ~120 wartości placeholder. Pytania uzupełniające zadawane tylko dla brakujących lub niejednoznacznych elementów. Wynik identyczny ze standardowym wizardem.
+- **`import/README.md`:** Krótki przewodnik wyjaśniający obsługiwane typy plików i sposób użycia trybu importu.
+- **Wbudowana mapa ekstrakcji placeholder:** Pełna mapa wbudowana w `INIT_PROMPT_import.md` — obejmuje wszystkie placeholder w sześciu szablonach reguł projektowych i siedmiu szablonach dokumentów, z regułami pewności (HIGH / MEDIUM / LOW) i wzorcami wyszukiwania.
+- **Wykrywanie konfliktów:** Gdy dwa pliki źródłowe zawierają sprzeczne informacje, tryb importu jawnie oznacza konflikt i prosi użytkownika o jednorazowe rozstrzygnięcie — nigdy nie wybiera cicho jednej strony.
+- **Obsługa wizji:** Pliki `.png` / `.jpg` / `.webp` analizowane pod kątem dominujących kolorów (`<<BRAND_PRIMARY>>`), typografii (`<<FONT_PRIMARY>>`), i wzorców układu. Pewność zawsze MEDIUM lub LOW dla ekstrakcji wizualnej.
+- **Odsyłacze:** Dodano wzmiankę w sekcji 0 plików `INIT_PROMPT_short/standard/deep.md` — „Masz już dokumenty? Zobacz `INIT_PROMPT_import.md`".
+- **`import/` dodany do `.gitignore`**.
+- **Ekran Konfiguracja w dashboardzie GUI:** Nowy ekran Setup (`/setup`) w `vibe-forge-ui` z dwoma trybami: wizard krok po kroku oraz panel importu, który czyta folder `import/` i wyodrębnia odpowiedzi przez API (`GET /api/import/status`, `POST /api/import/extract`).
 
 ### v1.3
 
